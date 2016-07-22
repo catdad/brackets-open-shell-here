@@ -25,7 +25,7 @@
             ];
         }());
 
-        spawn('cmd.exe', ['/c', 'start', 'cmd'], {
+        spawn('cmd.exe', ['/c', 'start', 'cmd', '/K', 'cd', '/d', path], {
             detached: true,
             stdio: stdio
         }).unref();
