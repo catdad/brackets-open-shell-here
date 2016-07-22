@@ -7,11 +7,7 @@ define(function (require, exports, module) {
     var AppInit = brackets.getModule('utils/AppInit');
     var NodeDomain = brackets.getModule('utils/NodeDomain');
     var ExtensionUtils = brackets.getModule('utils/ExtensionUtils');
-    var CommandManager = brackets.getModule('command/CommandManager');
-    var Commands = brackets.getModule('command/Commands');
-    var Menus = brackets.getModule('command/Menus');
     var ProjectManager = brackets.getModule('project/ProjectManager');
-    var Dialogs = brackets.getModule('widgets/Dialogs');
     
     var COMMAND_ID = 'catdad-open-shell-here';
 
@@ -37,11 +33,6 @@ define(function (require, exports, module) {
                 });
         }
     }
-
-    CommandManager.register('Open shell', COMMAND_ID, openShell);
-
-    var menu1 = Menus.getContextMenu(Menus.ContextMenuIds.PROJECT_MENU);
-    menu1.addMenuItem(COMMAND_ID);
 
     /* Create Terminal Icon */
     ExtensionUtils.loadStyleSheet(module, 'styles/icon.css');
