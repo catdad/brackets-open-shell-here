@@ -2,6 +2,7 @@
 
 (function () {
     var fs = require('fs');
+    var path = require('path');
     var spawn = require('child_process').spawn;
 
     function defaultShell() {
@@ -21,9 +22,11 @@
         return env.SHELL || '/bin/sh';
     }
     
-    function shellArgs(path) {
+    function shellArgs(dirpath) {
+        var title = path.basename(dirpath);
+        
         if (/^win/.test(process.platform)) {
-            return ['/c', 'start', 'cmd', '/K', 'cd', '/d', path];
+            return ['/c', 'start', '"' + title + '"', 'cmd', '/K', 'cd', '/d', dirpath];
         } else {
             // TODO
             return [];
