@@ -52,9 +52,7 @@
             ];
         }());
         
-        var shell = defaultShell();
-
-        spawn(shell, shellArgs(path), {
+        spawn(defaultShell(), shellArgs(path), {
             detached: true,
             stdio: stdio
         }).unref();
