@@ -1,4 +1,6 @@
 #catdad-open-shell-here {
-    background-image: url(icons.svg);
+    background-image: url(icon.svg);
     background-position: center center;
+    background-size: 18px 18px;
+    background-repeat: no-repeat;
 }

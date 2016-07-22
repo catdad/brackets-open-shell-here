@@ -35,7 +35,7 @@ define(function (require, exports, module) {
     }
 
     /* Create Terminal Icon */
-    ExtensionUtils.loadStyleSheet(module, 'styles/icon.css');
+    ExtensionUtils.loadStyleSheet(module, 'style/icon.css');
     $(document.createElement('a'))
         .attr('id', 'catdad-open-shell-here')
         .attr('href', '#')
