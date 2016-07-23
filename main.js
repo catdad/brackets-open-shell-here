@@ -9,8 +9,6 @@ define(function (require, exports, module) {
     var ExtensionUtils = brackets.getModule('utils/ExtensionUtils');
     var ProjectManager = brackets.getModule('project/ProjectManager');
     
-    var COMMAND_ID = 'catdad-open-shell-here';
-
     var openShellDomain = new NodeDomain(
         'open-shell-here',
         ExtensionUtils.getModulePath(module, 'node/open-shell-domain')
