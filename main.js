@@ -19,15 +19,15 @@ define(function (require, exports, module) {
         var entry = ProjectManager.getProjectRoot();
         
         if (entry) {
-            console.log('Entering in openInTerm, path: ' + entry.fullPath);
+            console.log('Entering in openShell, path: ' + entry.fullPath);
             
             openShellDomain
                 .exec('start', entry.fullPath)
                 .done(function () {
-                    console.log('Term successfully started, showing : ' + entry.fullPath);
+                    console.log('Shell successfully started, showing : ' + entry.fullPath);
                 })
                 .fail(function (err) {
-                    console.error('Error showing ' + entry.fullPath + ' in Term:', err);
+                    console.error('Error showing ' + entry.fullPath + ' in shell:', err);
                 });
         }
     }
