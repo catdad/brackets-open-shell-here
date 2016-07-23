@@ -61,7 +61,7 @@
         console.error('not implemented');
     }
     
-    function cmdStartTerm(dirpath, term) {
+    function openShell(dirpath, term) {
         
         if (/^win/.test(process.platform)) {
             openShellWindows(dirpath);
@@ -88,7 +88,7 @@
         domainManager.registerCommand(
             'open-shell-here', // domain name
             'start', // command name
-            cmdStartTerm, // command handler function
+            openShell, // command handler function
             false, // this command is synchronous in Node
             'Open a shell in the project folder.',
             paramsArray, // parameters
