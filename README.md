@@ -8,7 +8,7 @@ C to the rescue. Some native code solves this nicely. To make it as simple as po
 
 ### Building the native module
 
-Ugh. I still don't have a great way of doing this. Basically, install the [Visual C++ Build Tools](http://landinghub.visualstudio.com/visual-cpp-build-tools) (or VS 2015 with C++ enabled). Then, open the "Developer Command Prompt" (this is not regular `cmd`), and use that to build the file.
+Ugh. I still don't have a great way of doing this. Basically, install the [Visual C++ Build Tools](http://landinghub.visualstudio.com/visual-cpp-build-tools) (or VS 2015 with C++ enabled). Then, open the "Developer Command Prompt" (this is not the regular `cmd`), and use that to build the file.
 
 ```bash
 "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\cl.exe" open.c
