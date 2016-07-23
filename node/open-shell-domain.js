@@ -3,7 +3,8 @@
 (function () {
     var fs = require('fs');
     var path = require('path');
-    var spawn = require('child_process').spawn;
+    var child = require('child_process');
+    var spawn = child.spawn;
 
     function defaultShell() {
         // code in this function adapted from Sindre Sorhus
@@ -26,46 +27,54 @@
         var title = path.basename(dirpath);
         
         if (/^win/.test(process.platform)) {
-            return ['/c', 'start', '"' + title + '"', 'cmd', '/K', 'cd', '/d', dirpath];
+            return [title, dirpath];
         } else {
             // TODO
             return [];
         }
     }
     
-    function cmdStartTerm(path, term) {
-        var stdio = (function() {
-            if (!/^win/.test(process.platform)) {
-                return 'ignore';
-            }
+    function openShellWindows(dirpath) {
+        // Using spawn to launch cmd directly can sometimes
+        // be hard to detach, causing the cmd window to close
+        // when Brackets is closed. That can be worked around,
+        // however, that causes stdin to be ignored. This means
+        // that if I start a watch task (like "mocha --watch"),
+        // I cannot use ^C to exit, and effectively, I have to 
+        // close the cmd window in order to get out.
+        // So... C to the rescue.
 
-            // Believe it or not, Windows does have a null device
-            // that is not the nul file. We will use it here to
-            // make sure the spawned process detaches correctly.
-            var NULLDEV = '\\\\.\\NUL';
-            var MODE = {
-                READ: 'r',
-                WRITE: 'w'
-            };
-
-            return [
-                fs.openSync(NULLDEV, MODE.READ),
-                fs.openSync(NULLDEV, MODE.WRITE),
-                fs.openSync(NULLDEV, MODE.WRITE)
-            ];
-        }());
+        var bin = path.resolve(__dirname, '../bin', 'open.exe');
         
-        spawn(defaultShell(), shellArgs(path), {
-            detached: true,
-            stdio: stdio
-        }).unref();
-
+        var c = spawn(bin, [], {
+            stdio: ['ignore', 'pipe', 'pipe'],
+            cwd: dirpath
+        });
+        
+        // just for funsies, let's log this stuff
+        c.stdout.on('data', function(chunk) {
+            console.log('stdout wrote:', chunk.toString());
+        });
+    }
+    
+    function openShellNix(dirpath) {
+        console.error('not implemented');
+    }
+    
+    function cmdStartTerm(dirpath, term) {
+        
+        if (/^win/.test(process.platform)) {
+            openShellWindows(dirpath);
+        } else {
+            openShellNix(dirpath);
+        }
+        
         return true;
     }
-
+    
     function init(domainManager) {
         var paramsArray = [
-            { name: 'path', type: 'string', description: 'The starting path: the project folder path' },
+            { name: 'dirpath', type: 'string', description: 'The starting path: the project folder path' },
             { name: 'term', type: 'string', description: 'alternate terminal' }
         ];
 
