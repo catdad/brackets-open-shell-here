@@ -16,5 +16,10 @@
   "bugs": {
     "url": "https://github.com/catdad/brackets-open-shell-here/issues"
   },
-  "homepage": "https://github.com/catdad/brackets-open-shell-here#readme"
+  "homepage": "https://github.com/catdad/brackets-open-shell-here#readme",
+  "devDependencies": {
+    "del": "^2.2.2",
+    "gulp": "^3.9.1",
+    "gulp-zip": "^3.2.0"
+  }
 }
