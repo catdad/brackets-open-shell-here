@@ -18,8 +18,11 @@
   },
   "homepage": "https://github.com/catdad/brackets-open-shell-here#readme",
   "devDependencies": {
+    "async": "^2.0.1",
     "del": "^2.2.2",
     "gulp": "^3.9.1",
-    "gulp-zip": "^3.2.0"
+    "gulp-util": "^3.0.7",
+    "gulp-zip": "^3.2.0",
+    "shellton": "^2.0.0"
   }
 }
