@@ -6,6 +6,7 @@ var os = require('os');
 
 var gulp = require('gulp');
 var async = require('async');
+var mkdirp = require('mkdirp');
 var del = require('del');
 var zip = require('gulp-zip');
 var shellton = require('shellton');
@@ -19,6 +20,10 @@ gulp.task('clean', function() {
     return del(DEST);
 });
 
+gulp.task('clean:bin', function() {
+    return del('bin');
+});
+
 gulp.task('zip', function() {
     var filename = util.format('%s.zip', pkg.name);
     
@@ -27,7 +32,7 @@ gulp.task('zip', function() {
         .pipe(gulp.dest(DEST));
 });
 
-gulp.task('compile', function(done) {
+gulp.task('compile', ['clean:bin'], function(done) {
     var tools = {};
     var regex = /^vs([0-9]{3})comntools$/i;
     
@@ -62,6 +67,9 @@ gulp.task('compile', function(done) {
     };
     
     async.series([
+        function makeBin(next) {
+            mkdirp('bin', next);
+        },
         function getPaths(next) {
             var task = util.format('"%s" && where cl', opts.varsscript);
 
@@ -97,7 +105,7 @@ gulp.task('compile', function(done) {
             var OBJ = path.join('bin', 'open.obj');
     
             var task = util.format(
-                '"%s" && "%s" %s /Fe:%s /Fo:%s',
+                '"%s" && "%s" "%s" /Fe:%s /Fo:%s',
                 opts.varsscript,
                 opts.cl,
                 SRC,
