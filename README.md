@@ -8,6 +8,16 @@ C to the rescue. Some native code solves this nicely. To make it as simple as po
 
 ### Building the native module
 
+The `gulp` build is now capable of building the native C code, provided you have Visual Studio installed. It currently uses some env variables that are only available when Visual Studio is installed. To build it, run:
+
+```bash
+gulp compile
+```
+
+The output will be created in the correct location.
+
+### Manually building the native module
+
 Ugh. I still don't have a great way of doing this. Basically, install the [Visual C++ Build Tools](http://landinghub.visualstudio.com/visual-cpp-build-tools) (or VS 2015 with C++ enabled). Then, open the "Developer Command Prompt" (this is not the regular `cmd`), and use that to build the file.
 
 ```bash
