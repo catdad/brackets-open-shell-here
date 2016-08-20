@@ -29,3 +29,13 @@ This will output the `open.exe` binary file. I just copy it manually to the bin 
 ## Linux and macOS
 
 There are other extensions already that have pretty robust Linux support. I did not find one for Windows (an OS I use regularly), and so I made one. I plan on adding Linux and macOS support as I get time. For now, this module will do nothing on those operating systems.
+
+## Building the extension
+
+_Since this extension currently requires a native module to be build for Windows, it must be run on Windows._
+
+```bash
+gulp
+```
+
+This will create the requires zip file in the `output` folder.
