@@ -9,11 +9,12 @@ var async = require('async');
 var mkdirp = require('mkdirp');
 var del = require('del');
 var zip = require('gulp-zip');
+var sequence = require('gulp-sequence');
 var shellton = require('shellton');
 
 var pkg = require('./package.json');
 
-var SOURCE = ['main.js', 'node/**', 'bin/*.exe', 'style/**'];
+var SOURCE = ['main.js', 'package.json', 'node/**', 'bin/*.exe', 'style/**'];
 var DEST = 'output';
 
 gulp.task('clean', function() {
@@ -122,6 +123,8 @@ gulp.task('compile', ['clean:bin'], function(done) {
                 console.log(stdout);
                 console.log('--------------');
                 console.log(stderr);
+                
+                next();
             });
         }
     ], function(err) {
@@ -132,3 +135,5 @@ gulp.task('compile', ['clean:bin'], function(done) {
         done();
     });
 });
+
+gulp.task('default', sequence('clean', 'compile', 'zip'));
