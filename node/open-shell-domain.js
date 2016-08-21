@@ -33,44 +33,49 @@
         }
     }
     
-//    function openShellWindows(dirpath) {
-//        // Using spawn to launch cmd directly can sometimes
-//        // be hard to detach, causing the cmd window to close
-//        // when Brackets is closed. That can be worked around,
-//        // however, that causes stdin to be ignored. This means
-//        // that if I start a watch task (like "mocha --watch"),
-//        // I cannot use ^C to exit, and effectively, I have to 
-//        // close the cmd window in order to get out.
-//        // So... C to the rescue.
-//
-//        var bin = path.resolve(__dirname, '../bin', 'open.exe');
-//        
-//        var c = spawn(bin, [], {
-//            stdio: ['ignore', 'pipe', 'pipe'],
-//            cwd: dirpath
-//        });
-//        
-//        // just for funsies, let's log this stuff
-//        c.stdout.on('data', function(chunk) {
-//            console.log('stdout wrote:', chunk.toString());
-//        });
-//    }
-    
-    function openShellWindowsNode(dirpath) {
-        var bin = process.execPath;
-        var file = path.resolve(__dirname, 'open-windows.js');
-        
-        console.log('open windows shell', bin, file);
+    function openShellWindows(dirpath) {
+        // Using spawn to launch cmd directly can sometimes
+        // be hard to detach, causing the cmd window to close
+        // when Brackets is closed. That can be worked around,
+        // however, that causes stdin to be ignored. This means
+        // that if I start a watch task (like "mocha --watch"),
+        // I cannot use ^C to exit, and effectively, I have to 
+        // close the cmd window in order to get out.
+        // So... C to the rescue.
+
+        var bin = path.resolve(__dirname, '../bin', 'open.exe');
         
         var c = spawn(bin, [
-            file,
-            path.basename(dirpath)
+            '"' + path.basename(dirpath) + '"'
         ], {
-            stdio: 'inherit',
-            cwd: dirpath
+            stdio: ['ignore', 'pipe', 'pipe'],
+            cwd: dirpath,
+            windowsVerbatimArguments: true
         });
-        c.unref();
+        
+        // just for funsies, let's log this stuff
+        c.stdout.on('data', function(chunk) {
+            console.log('stdout wrote:', chunk.toString());
+        });
+        
+        c.stderr.on('data', function(chunk) {
+            console.error('stderr wrote:', chunk.toString());
+        });
     }
+    
+//    function openShellWindowsNode(dirpath) {
+//        var bin = process.execPath;
+//        var file = path.resolve(__dirname, 'open-windows.js');
+//        
+//        var c = spawn(bin, [
+//            file,
+//            path.basename(dirpath)
+//        ], {
+//            stdio: 'ignore',
+//            cwd: dirpath
+//        });
+//        c.unref();
+//    }
     
     function openShellNix(dirpath) {
         console.error('not implemented');
@@ -79,7 +84,7 @@
     function openShell(dirpath, term) {
         
         if (/^win/.test(process.platform)) {
-            openShellWindowsNode(dirpath);
+            openShellWindows(dirpath);
         } else {
             openShellNix(dirpath);
         }
