@@ -57,6 +57,19 @@
         });
     }
     
+    function openShellWindowsNode(dirpath) {
+        var bin = process.execPath;
+        var file = path.resolve(__dirname, 'open.js');
+        
+        var c = spawn(bin, [
+            file    
+        ], {
+            stdio: 'ignore',
+            cwd: dirpath
+        });
+        c.unref();
+    }
+    
     function openShellNix(dirpath) {
         console.error('not implemented');
     }
@@ -64,7 +77,8 @@
     function openShell(dirpath, term) {
         
         if (/^win/.test(process.platform)) {
-            openShellWindows(dirpath);
+//            openShellWindows(dirpath);
+            openShellWindowsNode(dirpath);
         } else {
             openShellNix(dirpath);
         }
