@@ -3,6 +3,7 @@
 var util = require('util');
 var path = require('path');
 var os = require('os');
+var fs = require('fs');
 
 var gulp = require('gulp');
 var async = require('async');
@@ -35,71 +36,73 @@ gulp.task('zip', function() {
 
 gulp.task('compile', ['clean:bin'], function(done) {
     var tools = {};
-    var regex = /^vs([0-9]{3})comntools$/i;
+    var regex = /microsoft visual studio ([0-9]+\.[0-9])+/i;
     
-//    var comtools = process.env.VS140COMNTOOLS;
-//    var comtools = process.env.VS120COMNTOOLS;
-//    var comtools = process.env.VS100COMNTOOLS;
-    
-    Object.keys(process.env).forEach(function(key) {
-        if (regex.test(key)) {
-            var match = key.match(regex);
-            var version = match[1];
-            
-            tools[version] = {
-                version: version,
-                envvar: key,
-                path: process.env[key]
-            };
-        }
-    });
-    
-    var versions = Object.keys(tools).sort(function (a, b) {
-        return +b - +a;
-    });
-    
-    if (!versions.length) {
-        throw new Error('did not find any common tools');
-    }
-    
-    var ver = versions[0];
-    var opts = {
-        varsscript: path.join(tools[ver].path, 'vsvars32.bat')
-    };
+    var opts = {};
     
     async.series([
         function makeBin(next) {
             mkdirp('bin', next);
         },
-        function getPaths(next) {
-            var task = util.format('"%s" && where cl', opts.varsscript);
-
-            shellton.exec({
-                task: task
-            }, function(err, stdout, stderr) {
+        function getMsvs(next) {
+            var programFiles = process.env['ProgramFiles(x86)'] || process.env.ProgramFiles;
+            
+            if (!programFiles) {
+                return setImmediate(next, new Error('could not find ProgramFiles'));
+            }
+            
+            fs.readdir(programFiles, function(err, list) {
                 if (err) {
                     return next(err);
                 }
-
-                if (stderr.trim()) {
-                    return next(stderr);
-                }
-
-                if (stdout.trim().length === 0) {
-                    return next('nothing in stdout');
-                }
-
-                var lines = stdout.split(os.EOL);
-
-                if (!lines.length) {
-                    return next('no lines found in stdout');
-                }
-
-                opts.cl = lines[0];
-
+                
+                var msvsVersions = list.filter(function(item) {
+                    return regex.test(item);
+                }).map(function(item) {
+                    return {
+                        path: path.resolve(programFiles, item),
+                        version: item.match(regex)[1],
+                        vcvars: path.resolve(programFiles, item, 'VC', 'vcvarsall.bat'),
+                        cl: path.resolve(programFiles, item, 'VC', 'bin', 'cl.exe')
+                    };
+                }).sort(function(a, b) {
+                    return Number(b.version) - Number(a.version);
+                });
+                
+                opts = msvsVersions[0];
+                
                 next();
             });
         },
+//        function getPaths(next) {
+//            var task = util.format('"%s" && where cl', opts.varsscript);
+//
+//            shellton.exec({
+//                task: task
+//            }, function(err, stdout, stderr) {
+//                if (err) {
+//                    return next(err);
+//                }
+//
+//                if (stderr.trim()) {
+//                    return next(stderr);
+//                }
+//
+//                if (stdout.trim().length === 0) {
+//                    return next('nothing in stdout');
+//                }
+//
+//                var lines = stdout.split(os.EOL);
+//
+//                if (!lines.length) {
+//                    return next('no lines found in stdout');
+//                }
+//
+//                opts.cl = lines[0];
+//
+//                next();
+//            });
+//        },
         function execBuild(next) {
             var SRC = path.join('native', 'open.c');
             var OUT = path.join('bin', 'open.exe');
@@ -107,7 +110,7 @@ gulp.task('compile', ['clean:bin'], function(done) {
     
             var task = util.format(
                 '"%s" && "%s" "%s" /Fe:%s /Fo:%s',
-                opts.varsscript,
+                opts.vcvars,
                 opts.cl,
                 SRC,
                 OUT,
