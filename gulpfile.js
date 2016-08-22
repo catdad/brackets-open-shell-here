@@ -2,7 +2,6 @@
 
 var util = require('util');
 var path = require('path');
-var os = require('os');
 var fs = require('fs');
 
 var gulp = require('gulp');
@@ -35,9 +34,7 @@ gulp.task('zip', function() {
 });
 
 gulp.task('compile', ['clean:bin'], function(done) {
-    var tools = {};
     var regex = /microsoft visual studio ([0-9]+\.[0-9])+/i;
-    
     var opts = {};
     
     async.series([
@@ -59,11 +56,14 @@ gulp.task('compile', ['clean:bin'], function(done) {
                 var msvsVersions = list.filter(function(item) {
                     return regex.test(item);
                 }).map(function(item) {
+                    
+                    var root = path.resolve(programFiles, item);
+                    
                     return {
-                        path: path.resolve(programFiles, item),
+                        path: root,
                         version: item.match(regex)[1],
-                        vcvars: path.resolve(programFiles, item, 'VC', 'vcvarsall.bat'),
-                        cl: path.resolve(programFiles, item, 'VC', 'bin', 'cl.exe')
+                        vcvars: path.resolve(root, 'VC', 'vcvarsall.bat'),
+                        cl: path.resolve(root, 'VC', 'bin', 'cl.exe')
                     };
                 }).sort(function(a, b) {
                     return Number(b.version) - Number(a.version);
