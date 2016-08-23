@@ -63,20 +63,6 @@
         });
     }
     
-//    function openShellWindowsNode(dirpath) {
-//        var bin = process.execPath;
-//        var file = path.resolve(__dirname, 'open-windows.js');
-//        
-//        var c = spawn(bin, [
-//            file,
-//            path.basename(dirpath)
-//        ], {
-//            stdio: 'ignore',
-//            cwd: dirpath
-//        });
-//        c.unref();
-//    }
-    
     function openShellNix(dirpath) {
         console.error('not implemented');
     }
