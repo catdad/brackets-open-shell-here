@@ -2,8 +2,7 @@
 
 (function () {
     var path = require('path');
-    var child = require('child_process');
-    var spawn = child.spawn;
+    var spawn = require('child_process').spawn;
 
     function defaultShell() {
         // code in this function adapted from Sindre Sorhus
@@ -45,7 +44,7 @@
 
         var bin = path.resolve(__dirname, '../bin', 'open.exe');
         
-        var c = spawn(bin, [
+        var proc = spawn(bin, [
             '"' + path.basename(dirpath) + '"'
         ], {
             stdio: ['ignore', 'pipe', 'pipe'],
@@ -54,11 +53,11 @@
         });
         
         // just for funsies, let's log this stuff
-        c.stdout.on('data', function(chunk) {
+        proc.stdout.on('data', function(chunk) {
             console.log('stdout wrote:', chunk.toString());
         });
         
-        c.stderr.on('data', function(chunk) {
+        proc.stderr.on('data', function(chunk) {
             console.error('stderr wrote:', chunk.toString());
         });
     }
