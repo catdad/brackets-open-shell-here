@@ -21,17 +21,6 @@
         return env.SHELL || '/bin/sh';
     }
     
-    function shellArgs(dirpath) {
-        var title = path.basename(dirpath);
-        
-        if (/^win/.test(process.platform)) {
-            return [title, dirpath];
-        } else {
-            // TODO
-            return [];
-        }
-    }
-    
     function openShellWindows(dirpath) {
         // Using spawn to launch cmd directly can sometimes
         // be hard to detach, causing the cmd window to close
@@ -62,7 +51,7 @@
         });
     }
     
-    function openShellNix(dirpath) {
+    function openShellNix(/* dirpath */) {
         console.error('not implemented');
     }
     
@@ -78,10 +67,15 @@
     }
     
     function init(domainManager) {
-        var paramsArray = [
-            { name: 'dirpath', type: 'string', description: 'The starting path: the project folder path' },
-            { name: 'term', type: 'string', description: 'alternate terminal' }
-        ];
+        var paramsArray = [{
+            name: 'dirpath',
+            type: 'string',
+            description: 'The starting path: the project folder path'
+        }, {
+            name: 'term',
+            type: 'string',
+            description: 'alternate terminal'
+        }];
 
         if (!domainManager.hasDomain('open-shell-here')) {
             domainManager.registerDomain('open-shell-here', {
