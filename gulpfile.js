@@ -109,7 +109,7 @@ gulp.task('compile', ['clean:bin'], function(done) {
             var OBJ = path.join('bin', 'open.obj');
     
             var task = util.format(
-                '"%s" && "%s" "%s" /Fe:%s /Fo:%s',
+                '"%s" x86 && "%s" "%s" /Fe:%s /Fo:%s',
                 opts.vcvars,
                 opts.cl,
                 SRC,
