@@ -3,6 +3,8 @@
 (function () {
     var path = require('path');
     var spawn = require('child_process').spawn;
+    
+    var winBash = require('./win-bash.js');
 
     function defaultShell() {
         // code in this function adapted from Sindre Sorhus
@@ -19,6 +21,10 @@
         }
 
         return env.SHELL || '/bin/sh';
+    }
+    
+    function openShellWindowsBath(dirpath) {
+        winBash(dirpath);
     }
     
     function openShellWindows(dirpath) {
