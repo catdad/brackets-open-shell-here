@@ -1,10 +1,9 @@
 /* jshint node: true */
 
-var spawn = require('child_process').spawn;
-var exec = require('child_process').exec;
 var os = require('os');
-
-console.log('win bash required');
+var childProcess = require('child_process');
+var spawn = childProcess.spawn;
+var exec = childProcess.exec;
 
 function find(bin, done) {
     exec('where ' + bin, function (err, stdout) {
