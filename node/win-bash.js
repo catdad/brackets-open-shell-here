@@ -27,8 +27,6 @@ function execBinary(bin, args, opts) {
     opts.stdio = ['ignore', process.stdout, process.stderr];
     var spawnArgs = ['/c', 'start', bin].concat(args);
     
-    console.log(spawnArgs);
-    
     spawn('cmd', spawnArgs, opts);
 }
 
@@ -37,7 +35,6 @@ module.exports = function (dirpath) {
     
     find('node', function (err, location) {
         if (err) {
-            console.log('WINBASH ERROR');
             console.error(err);
             return;
         }
