@@ -23,7 +23,7 @@
         return env.SHELL || '/bin/sh';
     }
     
-    function openShellWindowsBath(dirpath) {
+    function openShellWindowsBash(dirpath) {
         winBash(dirpath);
     }
     
