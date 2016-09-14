@@ -5,6 +5,7 @@ var path = require('path');
 var fs = require('fs');
 
 var gulp = require('gulp');
+var gutil = require('gulp-util');
 var async = require('async');
 var mkdirp = require('mkdirp');
 var del = require('del');
@@ -88,15 +89,16 @@ gulp.task('compile', ['clean:bin'], function(done) {
                 OBJ
             );
             
-            console.log('running:', task);
+            gutil.log('running: \'%s\'', gutil.colors.cyan(task));
             
             shellton.exec({
                 task: task,
                 cwd: __dirname
             }, function(err, stdout, stderr) {
-                console.log(stdout);
+                
+                console.log(gutil.colors.yellow(stdout.trim()));
                 console.log('--------------');
-                console.log(stderr);
+                console.log(gutil.colors.red(stderr.trim()));
                 
                 next();
             });
