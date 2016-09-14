@@ -74,35 +74,6 @@ gulp.task('compile', ['clean:bin'], function(done) {
                 next();
             });
         },
-//        function getPaths(next) {
-//            var task = util.format('"%s" && where cl', opts.varsscript);
-//
-//            shellton.exec({
-//                task: task
-//            }, function(err, stdout, stderr) {
-//                if (err) {
-//                    return next(err);
-//                }
-//
-//                if (stderr.trim()) {
-//                    return next(stderr);
-//                }
-//
-//                if (stdout.trim().length === 0) {
-//                    return next('nothing in stdout');
-//                }
-//
-//                var lines = stdout.split(os.EOL);
-//
-//                if (!lines.length) {
-//                    return next('no lines found in stdout');
-//                }
-//
-//                opts.cl = lines[0];
-//
-//                next();
-//            });
-//        },
         function execBuild(next) {
             var SRC = path.join('native', 'open.c');
             var OUT = path.join('bin', 'open.exe');
