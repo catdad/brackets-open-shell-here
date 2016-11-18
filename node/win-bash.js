@@ -24,10 +24,11 @@ function find(bin, done) {
 }
 
 function execBinary(bin, args, opts) {
-    opts.stdio = ['ignore', process.stdout, process.stderr];
+    opts.stdio = 'ignore';
+    opts.detached = true;
     var spawnArgs = ['/c', 'start', bin].concat(args);
     
-    spawn('cmd', spawnArgs, opts);
+    spawn('cmd', spawnArgs, opts).unref();
 }
 
 module.exports = function (dirpath) {
@@ -46,7 +47,7 @@ module.exports = function (dirpath) {
         console.log('exec:', command);
         
         exec(command, {
-           cwd: __dirname 
+            cwd: __dirname
         }, function () {
             console.log('node exec is over', arguments);
         });
