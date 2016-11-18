@@ -5,6 +5,7 @@
     var spawn = require('child_process').spawn;
     
     var winBash = require('./win-bash.js');
+    var winBrackets18 = require('./win-brackets-1.8.js');
 
     function defaultShell() {
         // code in this function adapted from Sindre Sorhus
@@ -62,6 +63,9 @@
     }
     
     function openShell(dirpath, term) {
+//        winBrackets18(dirpath);
+//        
+//        return true;
         
         if (/^win/.test(process.platform)) {
             openShellWindows(dirpath);
