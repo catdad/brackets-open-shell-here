@@ -63,12 +63,10 @@
     }
     
     function openShell(dirpath, term) {
-//        winBrackets18(dirpath);
-//        
-//        return true;
         
         if (/^win/.test(process.platform)) {
-            openShellWindows(dirpath);
+            winBrackets18(dirpath);
+//            openShellWindows(dirpath);
         } else {
             openShellNix(dirpath);
         }
