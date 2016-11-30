@@ -1,13 +1,12 @@
 /* jslint node: true */
 
-var path = require('path');
 var util = require('util');
 var spawn = require('child_process').spawn;
 
-module.exports = function openShellWindows(dirpath) {
-    var title = util.format('"%s"', path.basename(dirpath));
+module.exports = function openShellWindows(dirpath, title) {
+    var ttl = util.format('"%s"', title);
 
-    spawn('cmd.exe', ['/c', 'start', title, 'cmd.exe'], {
+    spawn('cmd.exe', ['/c', 'start', ttl, 'cmd.exe'], {
         stdio: 'ignore',
         cwd: dirpath,
         windowsVerbatimArguments: true

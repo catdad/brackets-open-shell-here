@@ -2,10 +2,9 @@
 
 (function () {
     var path = require('path');
-    var spawn = require('child_process').spawn;
     
     var winBash = require('./win-bash.js');
-    var winBrackets18 = require('./win-brackets-1.8.js');
+    var openWinShell = require('./win-brackets-1.8.js');
 
     function defaultShell() {
         // code in this function adapted from Sindre Sorhus
@@ -28,47 +27,17 @@
         winBash(dirpath);
     }
     
-    function openShellWindows(dirpath) {
-        // Using spawn to launch cmd directly can sometimes
-        // be hard to detach, causing the cmd window to close
-        // when Brackets is closed. That can be worked around,
-        // however, that causes stdin to be ignored. This means
-        // that if I start a watch task (like "mocha --watch"),
-        // I cannot use ^C to exit, and effectively, I have to 
-        // close the cmd window in order to get out.
-        // So... C to the rescue.
-
-        var bin = path.resolve(__dirname, '../bin', 'open.exe');
-        
-        var proc = spawn(bin, [
-            '"' + path.basename(dirpath) + '"'
-        ], {
-            stdio: ['ignore', 'pipe', 'pipe'],
-            cwd: dirpath,
-            windowsVerbatimArguments: true
-        });
-        
-        // just for funsies, let's log this stuff
-        proc.stdout.on('data', function(chunk) {
-            console.log('stdout wrote:', chunk.toString());
-        });
-        
-        proc.stderr.on('data', function(chunk) {
-            console.error('stderr wrote:', chunk.toString());
-        });
-    }
-    
     function openShellNix(/* dirpath */) {
         console.error('not implemented');
     }
     
     function openShell(dirpath, term) {
+        var title = path.basename(dirpath);
         
         if (/^win/.test(process.platform)) {
-            winBrackets18(dirpath);
-//            openShellWindows(dirpath);
+            openWinShell(dirpath, title);
         } else {
-            openShellNix(dirpath);
+            openShellNix(dirpath, title);
         }
         
         return true;
