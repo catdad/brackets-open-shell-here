@@ -1,4 +1,4 @@
-/* jslint devel: true */
+/* jslint devel: true, esversion: 6 */
 /* global define, $, document, brackets */
 
 define(function (require, exports, module) {
@@ -34,7 +34,7 @@ define(function (require, exports, module) {
     }
     
     function leftClick() {
-        $toggles.toggleClass('catdad-open');
+        $toggles.toggleClass('catdad-open-shell-open');
     }
     
     var $main = $(document.createElement('a'))
@@ -44,10 +44,16 @@ define(function (require, exports, module) {
         .attr('title', 'Open shell\nright-click to configure')
         .on('click', openShell('default'))
         .on('contextmenu', leftClick);
+    
+    var template = `
+        <a href="#" class="catdad-open-shell-icon"></a>
+        <a href="#" class="catdad-open-shell-icon catdad-open-shell-icon-orange"></a>
+    `;
 
     var $toggles = $(document.createElement('div'))
         .attr('id', 'catdad-open-shell-toggles')
-        .html('TODO add options here');
+        .attr('class', 'catdad-open-shell-toggles')
+        .html(template);
     
     // load the style for this extension
     ExtensionUtils.loadStyleSheet(module, 'style/icon.css');
@@ -56,7 +62,7 @@ define(function (require, exports, module) {
         var $toolbar = $('#main-toolbar .buttons');
         
         $toolbar.append($main);
-//        $toolbar.append($toggles);
+        $toolbar.append($toggles);
     });
     
 });
