@@ -12,6 +12,7 @@
     left: 0;
     
     background-color: #bbb;
+    
     -webkit-mask-image: url(icon.svg);
     -webkit-mask-size: 85%;
     -webkit-mask-repeat: no-repeat;
@@ -23,7 +24,11 @@
 }
 
 .catdad-open-shell-icon-orange::after {
-    background-color: orange;
+    background-color: #e0952d;
+}
+
+.catdad-open-shell-icon-blue::after {
+    background-color: #6db6ff;
 }
 
 .catdad-open-shell-toggles {
