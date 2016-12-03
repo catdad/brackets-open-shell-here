@@ -39,6 +39,7 @@ define(function (require, exports, module) {
     
     var $main = $(document.createElement('a'))
         .attr('id', 'catdad-open-shell-default')
+        .attr('class', 'catdad-open-shell-icon')
         .attr('href', '#')
         .attr('title', 'Open shell\nright-click to configure')
         .on('click', openShell('default'))

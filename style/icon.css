@@ -1,8 +1,29 @@
-#catdad-open-shell-default {
-    background-image: url(icon.svg);
-    background-position: center center;
-    background-size: 85%;
-    background-repeat: no-repeat;
+.catdad-open-shell-icon {
+    position: relative;
+    display: block;
+}
+
+.catdad-open-shell-icon::after {
+    position: absolute;
+    content: '';
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    
+    background-color: #bbb;
+    -webkit-mask-image: url(icon.svg);
+    -webkit-mask-size: 85%;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-image: url(icon.svg);
+    mask-size: 85%;
+    mask-repeat: no-repeat;
+    mask-position: center;
+}
+
+.catdad-open-shell-icon-orange::after {
+    background-color: orange;
 }
 
 #catdad-open-shell-toggles {
@@ -15,6 +36,7 @@
     
     transition: max-height 500ms ease, margin 500ms ease;
 }
+
 
 #catdad-open-shell-toggles.catdad-open {
     margin: 10px 0;
