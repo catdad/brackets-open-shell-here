@@ -3,8 +3,8 @@
 (function () {
     var path = require('path');
     
-    var winBash = require('./win-bash.js');
-    var openWinShell = require('./win-brackets-1.8.js');
+    var winBash = require('./win-bash-brackets-1.8.js');
+    var winDefault = require('./win-brackets-1.8.js');
 
     function defaultShell() {
         // code in this function adapted from Sindre Sorhus
@@ -23,19 +23,22 @@
         return env.SHELL || '/bin/sh';
     }
     
-    function openShellWindowsBash(dirpath) {
-        winBash(dirpath);
-    }
-    
     function openShellNix(/* dirpath */) {
         console.error('not implemented');
     }
     
+    var shells = {
+        'win-default': winDefault,
+        'win-bash': winBash
+    };
+    
     function openShell(dirpath, term) {
         var title = path.basename(dirpath);
         
-        if (/^win/.test(process.platform)) {
-            openWinShell(dirpath, title);
+        var shell = (/^win/.test(process.platform) ? 'win' : 'linux') + '-' + (term || 'default');
+        
+        if (shells[shell]) {
+            shells[shell](dirpath, title);
         } else {
             openShellNix(dirpath, title);
         }
