@@ -1,5 +1,5 @@
 /* jslint devel: true */
-/* global define, $, document, brackets, Mustache */
+/* global define, $, document, brackets */
 
 define(function (require, exports, module) {
     'use strict';
@@ -15,21 +15,20 @@ define(function (require, exports, module) {
     );
 
     function openShell() {
-
         var entry = ProjectManager.getProjectRoot();
-        
-        if (entry) {
-            console.log('Entering in openShell, path: ' + entry.fullPath);
-            
-            openShellDomain
-                .exec('start', entry.fullPath)
-                .done(function () {
-                    console.log('Shell successfully started, showing : ' + entry.fullPath);
-                })
-                .fail(function (err) {
-                    console.error('Error showing ' + entry.fullPath + ' in shell:', err);
-                });
+
+        if (!entry) {
+            return;
         }
+        
+        openShellDomain
+            .exec('start', entry.fullPath)
+            .done(function () {
+                console.log('Shell successfully started, showing : ' + entry.fullPath);
+            })
+            .fail(function (err) {
+                console.error('Error showing ' + entry.fullPath + ' in shell:', err);
+            });
     }
 
     /* Create Terminal Icon */
