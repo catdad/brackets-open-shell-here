@@ -1,4 +1,4 @@
-/* jshint node: true */
+/* jshint node: true, esversion: 6 */
 
 var os = require('os');
 var exec = require('child_process').exec;
@@ -29,9 +29,11 @@ function callbackPromise(func, callback) {
     });
 }
 
-function winfind(bin, callback) {
+function find(bin, callback) {
+    var cmd = pltform === 'win' ? 'where' : 'which';
+
     return callbackPromise(function (done) {
-        exec('where ' + bin, function (err, stdout) {
+        exec(`${cmd} ${bin}`, function (err, stdout) {
             if (err) {
                 return done(err);
             }
@@ -49,9 +51,9 @@ function winfind(bin, callback) {
     }, callback);
 }
 
-function winsupported(bin, callback) {
+function supported(bin, callback) {
     return callbackPromise(function (done) {
-        winfind(bin, function (err) {
+        find(bin, function (err) {
             var returnVal = {};
             returnVal[bin] = err ? false : true;
             
@@ -61,14 +63,10 @@ function winsupported(bin, callback) {
 }
 
 function getSupportedShells(done) {
-    if (pltform !== 'win') {
-        return setImmediate(done, null, {});
-    }
-    
     Promise.all([
-        winsupported('cmd'),
-        winsupported('bash'),
-        winsupported('powershell')
+        supported('cmd'),
+        supported('bash'),
+        supported('powershell')
     ]).then(function (val) {
         done(null, val.reduce(function (memo, obj) {
             return Object.assign(memo, obj);
