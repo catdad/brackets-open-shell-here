@@ -34,12 +34,21 @@
 .catdad-open-shell-toggles {
     width: 100%;
     max-height: 0;
-    margin: 0;
     overflow: hidden;
-
-    background: #2D2E30;
     
     transition: max-height 500ms ease, margin 500ms ease;
+}
+
+.catdad-open-shell-toggles-container {
+    background: #2D2E30;
+    background-color: rgba(0, 0, 0, 0.24);
+
+    margin-top: 5px;
+    padding: 0.1px 0 5px;
+}
+
+.catdad-open-shell-toggles.catdad-open-shell-open {
+    max-height: 200px;
 }
 
 .catdad-open-shell-toggles a {
@@ -51,9 +60,10 @@
     width: 24px;
 }
 
+.catdad-open-shell-toggles a:hover {
+    background-color: rgba(255, 255, 255, 0.24);
+}
 
-.catdad-open-shell-toggles.catdad-open-shell-open {
-    margin: 3px 0 7px 0;
-    max-height: 200px;
-    padding-bottom: 5px;
+.catdad-open-shell-toggles a:active {
+    background-color: rgba(255, 255, 255, 0.12);
 }

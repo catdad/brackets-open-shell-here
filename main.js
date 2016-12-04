@@ -46,8 +46,10 @@ define(function (require, exports, module) {
         .on('contextmenu', leftClick);
     
     var template = `
-        <a href="#" class="catdad-open-shell-icon"></a>
-        <a href="#" class="catdad-open-shell-icon catdad-open-shell-icon-orange"></a>
+        <div class="catdad-open-shell-toggles-container">
+            <a href="#" class="catdad-open-shell-icon"></a>
+            <a href="#" class="catdad-open-shell-icon catdad-open-shell-icon-orange"></a>
+        </div>
     `;
 
     var $toggles = $(document.createElement('div'))
