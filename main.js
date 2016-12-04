@@ -1,19 +1,32 @@
 /* jslint devel: true, esversion: 6 */
-/* global define, $, document, brackets */
+/* global define, $, _, document, brackets */
 
 define(function (require, exports, module) {
     'use strict';
 
+    var name = 'catdad.open-shell-here';
+    
     var AppInit = brackets.getModule('utils/AppInit');
     var NodeDomain = brackets.getModule('utils/NodeDomain');
     var ExtensionUtils = brackets.getModule('utils/ExtensionUtils');
     var ProjectManager = brackets.getModule('project/ProjectManager');
+    var PreferencesManager = brackets.getModule('preferences/PreferencesManager');
+    var prefs = PreferencesManager.getExtensionPrefs(name);
     
     var openShellDomain = new NodeDomain(
         'open-shell-here',
         ExtensionUtils.getModulePath(module, 'node/open-shell-domain')
     );
-
+    
+    openShellDomain
+        .exec('getSupported')
+        .done(function () {
+            console.log('supoprted list', arguments);
+        })
+        .fail(function (err) {
+            console.log('supported failed');
+        });
+    
     function openShell(type) {
         return function() {
             var entry = ProjectManager.getProjectRoot();
@@ -66,5 +79,4 @@ define(function (require, exports, module) {
         $toolbar.append($main);
         $toolbar.append($toggles);
     });
-    
 });

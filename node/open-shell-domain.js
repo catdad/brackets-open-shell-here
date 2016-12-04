@@ -3,6 +3,8 @@
 (function () {
     var path = require('path');
     
+    var supported = require('./supported-shells.js');
+    
     var winBash = require('./win-bash-brackets-1.8.js');
     var winDefault = require('./win-brackets-1.8.js');
 
@@ -72,6 +74,20 @@
             'Open a shell in the project folder.',
             paramsArray, // parameters
             [] // return values
+        );
+        
+        domainManager.registerCommand(
+            'open-shell-here',
+            'getSupported',
+            supported,
+            true, // this command is asynchronous in Node
+            'Get list of supported shells on the current platform',
+            [],
+            [{
+                name: 'supported',
+                type: 'object',
+                description: 'List of supported shells'
+            }]
         );
     }
 
