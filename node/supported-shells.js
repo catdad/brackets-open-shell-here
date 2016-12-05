@@ -3,7 +3,7 @@
 var os = require('os');
 var exec = require('child_process').exec;
 
-var pltform = (/^win/.test(process.platform)) ? 'win' : 'linux';
+var platform = (/^win/.test(process.platform)) ? 'win' : 'linux';
 
 function ensureCallback(done) {
     return typeof done === 'function' ? done : function noop() {};
@@ -30,7 +30,7 @@ function callbackPromise(func, callback) {
 }
 
 function find(bin, callback) {
-    var cmd = pltform === 'win' ? 'where' : 'which';
+    var cmd = (platform === 'win') ? 'where' : 'which';
 
     return callbackPromise(function (done) {
         exec(`${cmd} ${bin}`, function (err, stdout) {
