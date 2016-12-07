@@ -58,6 +58,12 @@
     height: 24px;
     margin: 7px 0 0 3px;
     width: 24px;
+    
+    opacity: 0.6;
+}
+
+.catdad-open-shell-toggles a.catdad-open-shell-active {
+    opacity: 1;
 }
 
 .catdad-open-shell-toggles a:hover {

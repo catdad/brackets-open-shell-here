@@ -24,7 +24,7 @@ define(function (require, exports, module) {
             console.log('supoprted list', arguments);
         })
         .fail(function (err) {
-            console.log('supported failed');
+            console.log('supported failed', err);
         });
     
     function openShell(type) {
@@ -68,7 +68,10 @@ define(function (require, exports, module) {
     var $toggles = $(document.createElement('div'))
         .attr('id', 'catdad-open-shell-toggles')
         .attr('class', 'catdad-open-shell-toggles')
-        .html(template);
+        .html(template)
+        .on('click', 'a', function() {
+            $(this).toggleClass('catdad-open-shell-active');
+        });
     
     // load the style for this extension
     ExtensionUtils.loadStyleSheet(module, 'style/icon.css');
