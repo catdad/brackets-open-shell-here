@@ -11,20 +11,20 @@ function ensureCallback(done) {
 
 function callbackPromise(func, callback) {
     callback = ensureCallback(callback);
-    
+
     return new Promise(function (resolve, reject) {
         func(function onDone(err) {
             if (err) {
                 reject(err);
                 callback(err);
-                
+
                 return;
             }
-            
+
             var args = [].slice.call(arguments, 1);
 
             resolve.apply(null, args);
-            callback.apply(null, [null].concat(args));    
+            callback.apply(null, [null].concat(args));
         });
     });
 }
@@ -56,7 +56,7 @@ function supported(bin, callback) {
         find(bin, function (err) {
             var returnVal = {};
             returnVal[bin] = err ? false : true;
-            
+
             done(null, returnVal);
         });
     }, callback);

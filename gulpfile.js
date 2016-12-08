@@ -28,7 +28,7 @@ gulp.task('clean:bin', function() {
 
 gulp.task('zip', function() {
     var filename = util.format('%s.zip', pkg.name);
-    
+
     gulp.src(SOURCE, { base: path.resolve(__dirname) })
         .pipe(zip(filename))
         .pipe(gulp.dest(DEST));
@@ -37,29 +37,29 @@ gulp.task('zip', function() {
 gulp.task('compile', ['clean:bin'], function(done) {
     var regex = /microsoft visual studio ([0-9]+\.[0-9])+/i;
     var opts = {};
-    
+
     async.series([
         function makeBin(next) {
             mkdirp('bin', next);
         },
         function getMsvs(next) {
             var programFiles = process.env['ProgramFiles(x86)'] || process.env.ProgramFiles;
-            
+
             if (!programFiles) {
                 return setImmediate(next, new Error('could not find ProgramFiles'));
             }
-            
+
             fs.readdir(programFiles, function(err, list) {
                 if (err) {
                     return next(err);
                 }
-                
+
                 var msvsVersions = list.filter(function(item) {
                     return regex.test(item);
                 }).map(function(item) {
-                    
+
                     var root = path.resolve(programFiles, item);
-                    
+
                     return {
                         path: root,
                         version: item.match(regex)[1],
@@ -69,9 +69,9 @@ gulp.task('compile', ['clean:bin'], function(done) {
                 }).sort(function(a, b) {
                     return Number(b.version) - Number(a.version);
                 });
-                
+
                 opts = msvsVersions[0];
-                
+
                 next();
             });
         },
@@ -79,7 +79,7 @@ gulp.task('compile', ['clean:bin'], function(done) {
             var SRC = path.join('native', 'open.c');
             var OUT = path.join('bin', 'open.exe');
             var OBJ = path.join('bin', 'open.obj');
-    
+
             var task = util.format(
                 '"%s" x86 && "%s" "%s" /Fe:%s /Fo:%s',
                 opts.vcvars,
@@ -88,18 +88,18 @@ gulp.task('compile', ['clean:bin'], function(done) {
                 OUT,
                 OBJ
             );
-            
+
             gutil.log('running: \'%s\'', gutil.colors.cyan(task));
-            
+
             shellton.exec({
                 task: task,
                 cwd: __dirname
             }, function(err, stdout, stderr) {
-                
+
                 console.log(gutil.colors.yellow(stdout.trim()));
                 console.log('--------------');
                 console.log(gutil.colors.red(stderr.trim()));
-                
+
                 next();
             });
         }
@@ -107,7 +107,7 @@ gulp.task('compile', ['clean:bin'], function(done) {
         if (err) {
             return done(err);
         }
-        
+
         done();
     });
 });
