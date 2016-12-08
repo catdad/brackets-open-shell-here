@@ -23,11 +23,11 @@
     mask-position: center;
 }
 
-.catdad-open-shell-icon-orange::after {
+.catdad-open-shell-icon-bash::after {
     background-color: #e0952d;
 }
 
-.catdad-open-shell-icon-blue::after {
+.catdad-open-shell-icon-powershell::after {
     background-color: #6db6ff;
 }
 

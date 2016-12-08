@@ -3,7 +3,7 @@
 
 define(function (require, exports, module) {
     'use strict';
-
+    
     var name = 'catdad.open-shell-here';
     
     var AppInit = brackets.getModule('utils/AppInit');
@@ -13,6 +13,10 @@ define(function (require, exports, module) {
     var PreferencesManager = brackets.getModule('preferences/PreferencesManager');
     var prefs = PreferencesManager.getExtensionPrefs(name);
     
+    var $toolbar;
+    var supportedList = {};
+    var displayList = {};
+    
     var openShellDomain = new NodeDomain(
         'open-shell-here',
         ExtensionUtils.getModulePath(module, 'node/open-shell-domain')
@@ -20,11 +24,13 @@ define(function (require, exports, module) {
     
     openShellDomain
         .exec('getSupported')
-        .done(function () {
-            console.log('supoprted list', arguments);
+        .done(function (list) {
+            supportedList = list;
+        
+            renderToggles(supportedList, _.defaults({}, supportedList));
         })
         .fail(function (err) {
-            console.log('supported failed', err);
+            console.error(`[${name}] failed to get supported shells list:`, err);
         });
     
     function openShell(type) {
@@ -34,7 +40,7 @@ define(function (require, exports, module) {
             if (!entry) {
                 return;
             }
-
+            
             openShellDomain
                 .exec('start', entry.fullPath, type)
                 .done(function () {
@@ -46,21 +52,18 @@ define(function (require, exports, module) {
         };
     }
     
+    function $button(type) {
+        return $(`<a href="#" class="catdad-open-shell-icon catdad-open-shell-icon-${type}"></a>`);
+    }
+    
     function leftClick() {
         $toggles.toggleClass('catdad-open-shell-open');
     }
     
-    var template = `
-        <div class="catdad-open-shell-toggles-container">
-            <a href="#" class="catdad-open-shell-icon"></a>
-            <a href="#" class="catdad-open-shell-icon catdad-open-shell-icon-orange"></a>
-        </div>
-    `;
-
     var $toggles = $(document.createElement('div'))
         .attr('id', 'catdad-open-shell-toggles')
         .attr('class', 'catdad-open-shell-toggles')
-        .html(template)
+        .html(`<div class="catdad-open-shell-toggles-container"></div>`)
         .on('click', 'a', function() {
             $(this).toggleClass('catdad-open-shell-active');
         });
@@ -68,7 +71,11 @@ define(function (require, exports, module) {
     // load the style for this extension
     ExtensionUtils.loadStyleSheet(module, 'style/icon.css');
     
-    function renderButtons($toolbar, list) {
+    function renderButtons(list) {
+        if ($toolbar === undefined) {
+            return;
+        }
+        
         $toolbar.children('.catdad-open-shell-icon').remove();
         
         var fragment = document.createDocumentFragment();
@@ -78,7 +85,7 @@ define(function (require, exports, module) {
                 return;
             }
             
-            $(`<a hred="#" class="catdad-open-shell-icon catdad-open-shell-${key}"></a>`)
+            $button(key)
                 .on('click', openShell(key))
                 .on('contextmenu', leftClick)
                 .appendTo(fragment);
@@ -87,13 +94,35 @@ define(function (require, exports, module) {
         $(fragment).insertBefore($toggles);
     }
     
+    function renderToggles(supported, enabled) {
+        if ($toolbar === undefined) {
+            return;
+        }
+        
+        var fragment = document.createDocumentFragment();
+        
+        _.forEach(supported, function(isSupported, key) {
+            if (!isSupported) {
+                return;
+            }
+            
+            $button(key)
+                .addClass(enabled[key] ? 'catdad-open-shell-active' : '')
+                .appendTo(fragment);
+        });
+        
+        $toggles.children().first().empty().append(fragment);
+    }
+    
     AppInit.appReady(function() {
-        var $toolbar = $('#main-toolbar .buttons');
+        $toolbar = $('#main-toolbar .buttons');
         
         $toolbar.append($toggles);
         
-        renderButtons($toolbar, {
-            main: true
+        renderToggles(supportedList, _.defaults({}, supportedList));
+        
+        renderButtons({
+            default: true
         });
     });
 });
