@@ -50,14 +50,6 @@ define(function (require, exports, module) {
         $toggles.toggleClass('catdad-open-shell-open');
     }
     
-    var $main = $(document.createElement('a'))
-        .attr('id', 'catdad-open-shell-default')
-        .attr('class', 'catdad-open-shell-icon')
-        .attr('href', '#')
-        .attr('title', 'Open shell\nright-click to configure')
-        .on('click', openShell('default'))
-        .on('contextmenu', leftClick);
-    
     var template = `
         <div class="catdad-open-shell-toggles-container">
             <a href="#" class="catdad-open-shell-icon"></a>
@@ -76,10 +68,32 @@ define(function (require, exports, module) {
     // load the style for this extension
     ExtensionUtils.loadStyleSheet(module, 'style/icon.css');
     
+    function renderButtons($toolbar, list) {
+        $toolbar.children('.catdad-open-shell-icon').remove();
+        
+        var fragment = document.createDocumentFragment();
+        
+        _.forEach(list, function(display, key) {
+            if (display !== true) {
+                return;
+            }
+            
+            $(`<a hred="#" class="catdad-open-shell-icon catdad-open-shell-${key}"></a>`)
+                .on('click', openShell(key))
+                .on('contextmenu', leftClick)
+                .appendTo(fragment);
+        });
+        
+        $(fragment).insertBefore($toggles);
+    }
+    
     AppInit.appReady(function() {
         var $toolbar = $('#main-toolbar .buttons');
         
-        $toolbar.append($main);
         $toolbar.append($toggles);
+        
+        renderButtons($toolbar, {
+            main: true
+        });
     });
 });
