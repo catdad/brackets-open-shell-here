@@ -159,6 +159,7 @@ define(function (require, exports, module) {
         renderToggles(supportedList, displayList);
     }
 
+    // wait for init before doing any DOM interactions, etc.
     AppInit.appReady(function() {
         $toolbar = $('#main-toolbar .buttons');
 
@@ -171,5 +172,6 @@ define(function (require, exports, module) {
         });
     });
 
+    // add a preference change listener
     prefs.on('change', onPrefUpdate);
 });
