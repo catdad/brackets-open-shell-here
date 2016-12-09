@@ -165,9 +165,7 @@ define(function (require, exports, module) {
 
         renderToggles(supportedList, displayList);
 
-        renderButtons({
-            default: true
-        });
+        renderButtons(displayList);
     });
 
     // add a preference change listener
