@@ -29,8 +29,6 @@ define(function (require, exports, module) {
         .done(function (list) {
             supportedList = list;
 
-            console.log('supported list', supportedList);
-
             renderToggles(supportedList, displayList);
         })
         .fail(function (err) {
