@@ -4,6 +4,7 @@ var os = require('os');
 var exec = require('child_process').exec;
 
 var platform = (/^win/.test(process.platform)) ? 'win' : 'linux';
+var defaultShell = (platform === 'win') ? 'cmd' : 'bash';
 
 function ensureCallback(done) {
     return typeof done === 'function' ? done : function noop() {};
@@ -55,7 +56,8 @@ function supported(bin, callback) {
     return callbackPromise(function (done) {
         find(bin, function (err) {
             var returnVal = {};
-            returnVal[bin] = err ? false : true;
+            var name = bin === defaultShell ? 'default' : bin;
+            returnVal[name] = err ? false : true;
 
             done(null, returnVal);
         });
