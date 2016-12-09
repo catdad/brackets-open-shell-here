@@ -15,7 +15,9 @@ define(function (require, exports, module) {
 
     var $toolbar;
     var supportedList = {};
-    var displayList = {};
+    var displayList = {
+        default: true
+    };
 
     var openShellDomain = new NodeDomain(
         'open-shell-here',
@@ -27,7 +29,9 @@ define(function (require, exports, module) {
         .done(function (list) {
             supportedList = list;
 
-            renderToggles(supportedList, _.defaults({}, supportedList));
+            console.log('supported list', supportedList);
+
+            renderToggles(supportedList, displayList);
         })
         .fail(function (err) {
             console.error(`[${name}] failed to get supported shells list:`, err);
@@ -65,7 +69,12 @@ define(function (require, exports, module) {
         .attr('class', 'catdad-open-shell-toggles')
         .html(`<div class="catdad-open-shell-toggles-container"></div>`)
         .on('click', 'a', function() {
-            $(this).toggleClass('catdad-open-shell-active');
+            // set the state only, the display will be updated
+            // on the pref change
+            setDisplayPref(
+                $(this).attr('catdad-open-shell-for'),
+                !$(this).hasClass('catdad-open-shell-active')
+            );
         });
 
     // load the style for this extension
@@ -108,10 +117,46 @@ define(function (require, exports, module) {
 
             $button(key)
                 .addClass(enabled[key] ? 'catdad-open-shell-active' : '')
+                .attr('catdad-open-shell-for', key)
                 .appendTo(fragment);
         });
 
         $toggles.children().first().empty().append(fragment);
+    }
+
+    function getDisplayPref() {
+        var pref = prefs.get('displayList');
+
+        if (!_.isArray(pref)) {
+            return ['default'];
+        }
+
+        return pref;
+    }
+
+    function setDisplayPref(name, isDisplayed) {
+        var displayedPrefs = getDisplayPref();
+
+        if (isDisplayed) {
+            displayedPrefs = _.uniq(displayedPrefs.concat(name));
+        } else {
+            displayedPrefs = _.pull(displayedPrefs, name);
+        }
+
+        prefs.set('displayList', displayedPrefs);
+    }
+
+    function onPrefUpdate() {
+        var displayedPrefs = getDisplayPref();
+
+        // TODO detect if this list actually changed
+
+        displayList = _.reduce(supportedList, function(memo, val, name) {
+            memo[name] = _.includes(displayedPrefs, name);
+            return memo;
+        }, {});
+
+        renderToggles(supportedList, displayList);
     }
 
     AppInit.appReady(function() {
@@ -119,10 +164,12 @@ define(function (require, exports, module) {
 
         $toolbar.append($toggles);
 
-        renderToggles(supportedList, _.defaults({}, supportedList));
+        renderToggles(supportedList, displayList);
 
         renderButtons({
             default: true
         });
     });
+
+    prefs.on('change', onPrefUpdate);
 });
