@@ -141,6 +141,11 @@ define(function (require, exports, module) {
             displayedPrefs = _.pull(displayedPrefs, name);
         }
 
+        // do not allow hiding all buttons
+        if (displayedPrefs.length === 0) {
+            displayedPrefs = ['default'];
+        }
+
         prefs.set('displayList', displayedPrefs);
     }
 
