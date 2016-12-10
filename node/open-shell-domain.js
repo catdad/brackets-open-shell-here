@@ -2,7 +2,9 @@
 
 (function () {
     var path = require('path');
-    
+
+    var supported = require('./supported-shells.js');
+
     var winBash = require('./win-bash-brackets-1.8.js');
     var winDefault = require('./win-brackets-1.8.js');
 
@@ -22,30 +24,30 @@
 
         return env.SHELL || '/bin/sh';
     }
-    
+
     function openShellNix(/* dirpath */) {
         console.error('not implemented');
     }
-    
+
     var shells = {
         'win-default': winDefault,
         'win-bash': winBash
     };
-    
+
     function openShell(dirpath, term) {
         var title = path.basename(dirpath);
-        
+
         var shell = (/^win/.test(process.platform) ? 'win' : 'linux') + '-' + (term || 'default');
-        
+
         if (shells[shell]) {
             shells[shell](dirpath, title);
         } else {
             openShellNix(dirpath, title);
         }
-        
+
         return true;
     }
-    
+
     function init(domainManager) {
         var paramsArray = [{
             name: 'dirpath',
@@ -63,7 +65,7 @@
                 minor: 1
             });
         }
-        
+
         domainManager.registerCommand(
             'open-shell-here', // domain name
             'start', // command name
@@ -72,6 +74,20 @@
             'Open a shell in the project folder.',
             paramsArray, // parameters
             [] // return values
+        );
+
+        domainManager.registerCommand(
+            'open-shell-here',
+            'getSupported',
+            supported,
+            true, // this command is asynchronous in Node
+            'Get list of supported shells on the current platform',
+            [],
+            [{
+                name: 'supported',
+                type: 'object',
+                description: 'List of supported shells'
+            }]
         );
     }
 

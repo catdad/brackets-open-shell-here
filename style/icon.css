@@ -10,8 +10,9 @@
     height: 100%;
     top: 0;
     left: 0;
-    
+
     background-color: #bbb;
+
     -webkit-mask-image: url(icon.svg);
     -webkit-mask-size: 85%;
     -webkit-mask-repeat: no-repeat;
@@ -22,23 +23,53 @@
     mask-position: center;
 }
 
-.catdad-open-shell-icon-orange::after {
-    background-color: orange;
+.catdad-open-shell-icon-bash::after {
+    background-color: #e0952d;
 }
 
-#catdad-open-shell-toggles {
+.catdad-open-shell-icon-powershell::after {
+    background-color: #6db6ff;
+}
+
+.catdad-open-shell-toggles {
     width: 100%;
     max-height: 0;
-    margin: 0;
     overflow: hidden;
 
-    background: #2D2E30;
-    
     transition: max-height 500ms ease, margin 500ms ease;
 }
 
+.catdad-open-shell-toggles-container {
+    background: #2D2E30;
+    background-color: rgba(0, 0, 0, 0.24);
 
-#catdad-open-shell-toggles.catdad-open {
-    margin: 10px 0;
+    margin-top: 5px;
+    padding: 0.1px 0 5px;
+}
+
+.catdad-open-shell-toggles.catdad-open-shell-open {
     max-height: 200px;
+}
+
+.catdad-open-shell-toggles a {
+    border-radius: 3px;
+    background-repeat: no-repeat;
+    display: block;
+    height: 24px;
+    margin: 7px 0 0 3px;
+    width: 24px;
+
+    opacity: 0.4;
+}
+
+.catdad-open-shell-toggles a.catdad-open-shell-active {
+    opacity: 1;
+}
+
+.catdad-open-shell-toggles a:hover {
+    background-color: rgba(255, 255, 255, 0.24);
+}
+
+.catdad-open-shell-toggles a:active {
+    background-color: rgba(255, 255, 255, 0.12);
 }
