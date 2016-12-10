@@ -14,10 +14,8 @@ define(function (require, exports, module) {
     var prefs = PreferencesManager.getExtensionPrefs(name);
 
     var $toolbar;
-    var supportedList = {};
-    var displayList = {
-        default: true
-    };
+    var supportedList = { default: true };
+    var displayList = { default: true };
 
     var openShellDomain = new NodeDomain(
         'open-shell-here',
@@ -29,7 +27,7 @@ define(function (require, exports, module) {
         .done(function (list) {
             supportedList = list;
 
-            renderToggles(supportedList, displayList);
+            onPrefUpdate();
         })
         .fail(function (err) {
             console.error(`[${name}] failed to get supported shells list:`, err);
@@ -146,7 +144,11 @@ define(function (require, exports, module) {
             displayedPrefs = ['default'];
         }
 
-        prefs.set('displayList', displayedPrefs);
+        prefs.set('displayList', displayedPrefs, {
+            location: {
+                scope: 'user'
+            }
+        });
     }
 
     function onPrefUpdate() {
@@ -169,9 +171,8 @@ define(function (require, exports, module) {
 
         $toolbar.append($toggles);
 
-        renderToggles(supportedList, displayList);
-
-        renderButtons(displayList);
+        // init the buttons
+        onPrefUpdate();
     });
 
     // add a preference change listener
