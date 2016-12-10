@@ -68,7 +68,7 @@ function getSupportedShells(done) {
     Promise.all([
         supported('cmd'),
         supported('bash'),
-        supported('powershell')
+//        supported('powershell')
     ]).then(function (val) {
         done(null, val.reduce(function (memo, obj) {
             return Object.assign(memo, obj);
