@@ -160,6 +160,7 @@ define(function (require, exports, module) {
         }, {});
 
         renderToggles(supportedList, displayList);
+        renderButtons(displayList);
     }
 
     // wait for init before doing any DOM interactions, etc.
