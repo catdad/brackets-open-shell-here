@@ -1,10 +1,9 @@
-/* jslint node: true */
+/* jslint node: true, esversion: 6 */
 
 (function () {
     var path = require('path');
 
     var supported = require('./supported-shells.js');
-
     var win = require('./win-brackets-1.8.js');
 
     function defaultShell() {
@@ -24,7 +23,7 @@
         return env.SHELL || '/bin/sh';
     }
 
-    function openShellNix(/* dirpath */) {
+    function openShellUnimplemented(/* dirpath */) {
         console.error('not implemented');
     }
 
@@ -42,7 +41,7 @@
         if (shells[shell]) {
             shells[shell](dirpath, title);
         } else {
-            openShellNix(dirpath, title);
+            openShellUnimplemented(dirpath, title);
         }
 
         return true;
@@ -91,5 +90,5 @@
         );
     }
 
-    exports.init = init;
+    module.exports = { init };
 }());
