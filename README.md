@@ -1,5 +1,10 @@
 # brackets-open-shell-here
 
+[![Code Climate][5]][6]
+
+[5]: https://codeclimate.com/github/catdad/catdad.open-shell-here/badges/gpa.svg
+[6]: https://codeclimate.com/github/catdad/catdad.open-shell-here
+
 ## Windows
 
 Opening `cmd` from Node directly using `spawn`, and detaching the process, causes `stdin` to get lost. If you start a long-running task (like `mocha --watch`), you will not be able to quit it. Ctrl+C will not be sent to the process, and you will have to close the command prompt and open a new one in order to keep working.
