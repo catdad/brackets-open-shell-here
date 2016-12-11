@@ -2,12 +2,14 @@
 
 var spawn = require('child_process').spawn;
 
-module.exports = function openShellWindows(dirpath, title) {
-    var ttl = `"${title}"`;
+module.exports = function (type) {
+    return function openShellWindows(dirpath, title) {
+        var ttl = `"${title}"`;
 
-    spawn('cmd.exe', ['/c', 'start', ttl, 'cmd.exe'], {
-        stdio: 'ignore',
-        cwd: dirpath,
-        windowsVerbatimArguments: true
-    }).unref();
+        spawn('cmd.exe', ['/c', 'start', ttl, type], {
+            stdio: 'ignore',
+            cwd: dirpath,
+            windowsVerbatimArguments: true
+        }).unref();
+    };
 };

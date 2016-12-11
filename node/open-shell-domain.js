@@ -5,8 +5,7 @@
 
     var supported = require('./supported-shells.js');
 
-    var winBash = require('./win-bash-brackets-1.8.js');
-    var winDefault = require('./win-brackets-1.8.js');
+    var win = require('./win-brackets-1.8.js');
 
     function defaultShell() {
         // code in this function adapted from Sindre Sorhus
@@ -30,8 +29,9 @@
     }
 
     var shells = {
-        'win-default': winDefault,
-        'win-bash': winBash
+        'win-default': win('cmd'),
+        'win-bash': win('bash'),
+        'win-powershell': win('powershell')
     };
 
     function openShell(dirpath, term) {
