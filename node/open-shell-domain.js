@@ -6,23 +6,6 @@
     var supported = require('./supported-shells.js');
     var win = require('./win-brackets-1.8.js');
 
-    function defaultShell() {
-        // code in this function adapted from Sindre Sorhus
-        // MIT License
-        // https://github.com/sindresorhus/default-shell/blob/d3e441382f0b95515dd208ca228ace817a3535a2/index.js
-        var env = process.env;
-
-        if (process.platform === 'darwin') {
-            return env.SHELL || '/bin/bash';
-        }
-
-        if (process.platform === 'win32') {
-            return env.COMSPEC || 'cmd.exe';
-        }
-
-        return env.SHELL || '/bin/sh';
-    }
-
     function openShellUnimplemented(/* dirpath */) {
         console.error('not implemented');
     }
