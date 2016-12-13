@@ -91,6 +91,7 @@ define(function (require, exports, module) {
             }
 
             $button(key)
+                .attr('title', `Open ${key} shell`)
                 .on('click', openShell(key))
                 .on('contextmenu', leftClick)
                 .appendTo(fragment);
