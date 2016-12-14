@@ -25,7 +25,7 @@ define(function (require, exports, module) {
     var log = (function(c) {
 
         function write(func, args) {
-            func.apply(null, [`[${name}]`].concat(args));
+            func.apply(null, [`[${name}]`, ...args]);
         }
 
         function arr(args) {
@@ -64,10 +64,10 @@ define(function (require, exports, module) {
             openShellDomain
                 .exec('start', entry.fullPath, type)
                 .done(function () {
-                    log.info('Shell successfully started, showing : ' + entry.fullPath);
+                    log.info(`${type} shell successfully started, showing : ${entry.fullPath}`);
                 })
                 .fail(function (err) {
-                    log.error('Error showing ' + entry.fullPath + ' in shell:', err);
+                    log.error(`Error opening ${type} shell, showing ${entry.fullPath}:`, err);
                 });
         };
     }
