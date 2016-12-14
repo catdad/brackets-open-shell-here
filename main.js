@@ -173,6 +173,11 @@ define(function (require, exports, module) {
     }
 
     function onPrefUpdate() {
+        if (!_.includes) {
+            // TODO figure out why we don't always have lodash in a brackets extension
+            return;
+        }
+
         var displayedPrefs = getDisplayPref();
 
         // TODO detect if this list actually changed
