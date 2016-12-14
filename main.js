@@ -22,6 +22,26 @@ define(function (require, exports, module) {
         ExtensionUtils.getModulePath(module, 'node/open-shell-domain')
     );
 
+    var log = (function(c) {
+
+        function write(func, args) {
+            func.apply(null, [`[${name}]`].concat(args));
+        }
+
+        function arr(args) {
+            return [].slice.call(args);
+        }
+
+        return {
+            info: function () {
+                write(c.log.bind(c), arr(arguments));
+            },
+            error: function () {
+                write(c.error.bind(c), arr(arguments));
+            }
+        };
+    }(console));
+
     openShellDomain
         .exec('getSupported')
         .done(function (list) {
@@ -30,7 +50,7 @@ define(function (require, exports, module) {
             onPrefUpdate();
         })
         .fail(function (err) {
-            console.error(`[${name}] failed to get supported shells list:`, err);
+            log.error(`[${name}] failed to get supported shells list:`, err);
         });
 
     function openShell(type) {
@@ -44,10 +64,10 @@ define(function (require, exports, module) {
             openShellDomain
                 .exec('start', entry.fullPath, type)
                 .done(function () {
-                    console.log('Shell successfully started, showing : ' + entry.fullPath);
+                    log.info('Shell successfully started, showing : ' + entry.fullPath);
                 })
                 .fail(function (err) {
-                    console.error('Error showing ' + entry.fullPath + ' in shell:', err);
+                    log.error('Error showing ' + entry.fullPath + ' in shell:', err);
                 });
         };
     }
