@@ -50,7 +50,7 @@ define(function (require, exports, module) {
             onPrefUpdate();
         })
         .fail(function (err) {
-            log.error(`[${name}] failed to get supported shells list:`, err);
+            log.error(`failed to get supported shells list:`, err);
         });
 
     function openShell(type) {
@@ -144,11 +144,7 @@ define(function (require, exports, module) {
     function getDisplayPref() {
         var pref = prefs.get('displayList');
 
-        if (!_.isArray(pref)) {
-            return ['default'];
-        }
-
-        return pref;
+        return _.isArray(pref) ? pref : ['default'];
     }
 
     function setDisplayPref(name, isDisplayed) {
