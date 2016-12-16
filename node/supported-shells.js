@@ -55,11 +55,9 @@ function find(bin, callback) {
 function supported(bin, callback) {
     return callbackPromise(function (done) {
         find(bin, function (err) {
-            var returnVal = {};
-            var name = bin === defaultShell ? 'default' : bin;
-            returnVal[name] = err ? false : true;
-
-            done(null, returnVal);
+            done(null, {
+                [(() => bin === defaultShell ? 'default' : bin)()]: err ? false : true
+            });
         });
     }, callback);
 }
