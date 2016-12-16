@@ -2,8 +2,8 @@
 
 [![Code Climate][5]][6]
 
-[5]: https://codeclimate.com/github/catdad/catdad.open-shell-here/badges/gpa.svg
-[6]: https://codeclimate.com/github/catdad/catdad.open-shell-here
+[5]: https://codeclimate.com/github/catdad/brackets-open-shell-here/badges/gpa.svg
+[6]: https://codeclimate.com/github/catdad/brackets-open-shell-here
 
 ## Windows
 
