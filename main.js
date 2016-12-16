@@ -25,19 +25,15 @@ define(function (require, exports, module) {
     var log = (function(c) {
 
         function write(func, args) {
-            func.apply(null, [`[${name}]`, ...args]);
-        }
-
-        function arr(args) {
-            return [].slice.call(args);
+            func(`[${name}]`, ...args);
         }
 
         return {
             info: function () {
-                write(c.log.bind(c), arr(arguments));
+                write(c.log.bind(c), arguments);
             },
             error: function () {
-                write(c.error.bind(c), arr(arguments));
+                write(c.error.bind(c), arguments);
             }
         };
     }(console));
@@ -64,7 +60,7 @@ define(function (require, exports, module) {
             openShellDomain
                 .exec('start', entry.fullPath, type)
                 .done(function () {
-                    log.info(`${type} shell successfully started, showing : ${entry.fullPath}`);
+                    log.info(`${type} shell successfully started, showing ${entry.fullPath}`);
                 })
                 .fail(function (err) {
                     log.error(`Error opening ${type} shell, showing ${entry.fullPath}:`, err);
