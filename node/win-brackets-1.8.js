@@ -4,9 +4,7 @@ var spawn = require('child_process').spawn;
 
 module.exports = function (type) {
     return function openShellWindows(dirpath, title) {
-        var ttl = `"${title}"`;
-
-        spawn('cmd.exe', ['/c', 'start', ttl, type], {
+        spawn('cmd.exe', ['/c', 'start', `"${title}"`, type], {
             stdio: 'ignore',
             cwd: dirpath,
             windowsVerbatimArguments: true

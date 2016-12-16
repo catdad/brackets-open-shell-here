@@ -19,7 +19,7 @@
     function openShell(dirpath, term) {
         var title = path.basename(dirpath);
 
-        var shell = (/^win/.test(process.platform) ? 'win' : 'linux') + '-' + (term || 'default');
+        var shell = `${(/^win/.test(process.platform) ? 'win' : 'linux')}-${(term || 'default')}`;
 
         if (shells[shell]) {
             shells[shell](dirpath, title);
@@ -34,7 +34,7 @@
         var paramsArray = [{
             name: 'dirpath',
             type: 'string',
-            description: 'The starting path: the project folder path'
+            description: 'the starting path'
         }, {
             name: 'term',
             type: 'string',
