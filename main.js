@@ -22,6 +22,9 @@ define(function (require, exports, module) {
         ExtensionUtils.getModulePath(module, 'node/open-shell-domain')
     );
 
+    // load the style for this extension
+    ExtensionUtils.loadStyleSheet(module, 'style/icon.css');
+
     var log = (function(c) {
 
         function write(func, args) {
@@ -76,9 +79,7 @@ define(function (require, exports, module) {
         $toggles.toggleClass('catdad-open-shell-open');
     }
 
-    var $toggles = $(document.createElement('div'))
-        .attr('id', 'catdad-open-shell-toggles')
-        .attr('class', 'catdad-open-shell-toggles')
+    var $toggles = $(`<div id="catdad-open-shell-toggles" class="catdad-open-shell-toggles"></div>`)
         .html(`<div class="catdad-open-shell-toggles-container"></div>`)
         .on('click', 'a', function() {
             // set the state only, the display will be updated
@@ -88,9 +89,6 @@ define(function (require, exports, module) {
                 !$(this).hasClass('catdad-open-shell-active')
             );
         });
-
-    // load the style for this extension
-    ExtensionUtils.loadStyleSheet(module, 'style/icon.css');
 
     function renderButtons(list) {
         if ($toolbar === undefined) {
