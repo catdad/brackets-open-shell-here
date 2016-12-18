@@ -17,10 +17,6 @@ gulp.task('clean', function() {
     return del(DEST);
 });
 
-gulp.task('clean:bin', function() {
-    return del('bin');
-});
-
 gulp.task('zip', function() {
     var filename = util.format('%s.zip', pkg.name);
 
