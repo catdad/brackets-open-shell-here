@@ -6,6 +6,8 @@
     var supported = require('./supported-shells.js');
     var win = require('./win-brackets-1.8.js');
 
+    var os = (/^win/.test(process.platform) ? 'win' : 'linux');
+
     function openShellUnimplemented(/* dirpath */) {
         console.error('not implemented');
     }
@@ -16,10 +18,9 @@
         'win-powershell': win('powershell')
     };
 
-    function openShell(dirpath, term) {
+    function openShell(dirpath, term = 'default') {
         var title = path.basename(dirpath);
-
-        var shell = `${(/^win/.test(process.platform) ? 'win' : 'linux')}-${(term || 'default')}`;
+        var shell = `${os}-${term}`;
 
         if (shells[shell]) {
             shells[shell](dirpath, title);
