@@ -4,7 +4,7 @@
     var path = require('path');
 
     var supported = require('./supported-shells.js');
-    var win = require('./win-brackets-1.8.js');
+    var win = require('./win.js');
 
     var os = (/^win/.test(process.platform) ? 'win' : 'linux');
 
