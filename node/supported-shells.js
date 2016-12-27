@@ -4,8 +4,26 @@ var os = require('os');
 var exec = require('child_process').exec;
 
 var platform = (/^win/.test(process.platform)) ? 'win' : 'linux';
-var defaultShell = (/^win/.test(process.platform)) ? 'cmd' :
-    (/^darwin/.test(process.platform)) ? 'Terminal' : 'gnome-terminal';
+var defaults = (function (os) {
+    if (/^win/.test(os)) {
+        return {
+            shell: 'cmd',
+            list: ['cmd', 'bash', 'powershell']
+        };
+    }
+
+    if (/^darwin/.test(os)) {
+        return {
+            shell: 'Terminal',
+            list: ['Terminal', 'iTerm']
+        };
+    }
+
+    return {
+        shell: 'gnome-terminal',
+        list: ['gnome-terminal', 'xfce4-terminal']
+    };
+}(process.platform));
 
 function ensureCallback(done) {
     return typeof done === 'function' ? done : function noop() {};
@@ -57,20 +75,14 @@ function supported(bin, callback) {
     return callbackPromise(function (done) {
         find(bin, function (err) {
             done(null, {
-                [(() => bin === defaultShell ? 'default' : bin)()]: err ? false : true
+                [(() => bin === defaults.shell ? 'default' : bin)()]: err ? false : true
             });
         });
     }, callback);
 }
 
 function getSupportedShells(done) {
-    Promise.all([
-        supported('cmd'),
-        supported('bash'),
-        supported('powershell'),
-        supported('gnome-terminal'),
-        supported('xfce4-terminal')
-    ]).then(function (val) {
+    Promise.all(defaults.list.map(supported)).then(function (val) {
         done(null, val.reduce(function (memo, obj) {
             return Object.assign(memo, obj);
         }, {}));
