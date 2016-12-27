@@ -90,3 +90,4 @@ function getSupportedShells(done) {
 }
 
 module.exports = getSupportedShells;
+module.exports.defaults = defaults;
