@@ -4,7 +4,8 @@ var os = require('os');
 var exec = require('child_process').exec;
 
 var platform = (/^win/.test(process.platform)) ? 'win' : 'linux';
-var defaultShell = (platform === 'win') ? 'cmd' : 'bash';
+var defaultShell = (/^win/.test(process.platform)) ? 'cmd' :
+    (/^darwin/.test(process.platform)) ? 'Terminal' : 'gnome-terminal';
 
 function ensureCallback(done) {
     return typeof done === 'function' ? done : function noop() {};
@@ -66,7 +67,9 @@ function getSupportedShells(done) {
     Promise.all([
         supported('cmd'),
         supported('bash'),
-        supported('powershell')
+        supported('powershell'),
+        supported('gnome-terminal'),
+        supported('xfce4-terminal')
     ]).then(function (val) {
         done(null, val.reduce(function (memo, obj) {
             return Object.assign(memo, obj);
