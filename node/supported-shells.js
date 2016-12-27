@@ -56,7 +56,7 @@ function supported(bin, callback) {
     return callbackPromise(function (done) {
         find(bin, function (err) {
             done(null, {
-                [(() => bin === defaultShell ? 'default' : bin)()]: err ? false : true
+                [bin === defaultShell ? 'default' : bin]: err ? false : true
             });
         });
     }, callback);
