@@ -1,9 +1,13 @@
 # brackets-open-shell-here
 
 [![Code Climate][5]][6]
+[![devDependencies Status][15]][16]
 
 [5]: https://codeclimate.com/github/catdad/brackets-open-shell-here/badges/gpa.svg
 [6]: https://codeclimate.com/github/catdad/brackets-open-shell-here
+
+[15]: https://david-dm.org/catdad/brackets-open-shell-here/dev-status.svg
+[16]: https://david-dm.org/catdad/brackets-open-shell-here?type=dev
 
 ## Windows
 
