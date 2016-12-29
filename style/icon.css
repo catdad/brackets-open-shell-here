@@ -23,7 +23,8 @@
     mask-position: center;
 }
 
-.catdad-open-shell-icon-bash::after {
+.catdad-open-shell-icon-bash::after,
+.catdad-open-shell-icon-xfce4-terminal::after {
     background-color: #e0952d;
 }
 
