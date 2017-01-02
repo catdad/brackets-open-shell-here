@@ -1,5 +1,5 @@
 /* jslint devel: true, esversion: 6 */
-/* global define, $, _, document, brackets */
+/* global define, $, document, brackets */
 
 define(function (require, exports, module) {
     'use strict';
@@ -12,6 +12,7 @@ define(function (require, exports, module) {
     var ProjectManager = brackets.getModule('project/ProjectManager');
     var PreferencesManager = brackets.getModule('preferences/PreferencesManager');
     var prefs = PreferencesManager.getExtensionPrefs(name);
+    var lodash = brackets.getModule('thirdparty/lodash');
 
     var $toolbar;
     var supportedList = { default: true };
@@ -99,7 +100,7 @@ define(function (require, exports, module) {
 
         var fragment = document.createDocumentFragment();
 
-        _.forEach(list, function(display, key) {
+        lodash.forEach(list, function(display, key) {
             if (display !== true) {
                 return;
             }
@@ -121,7 +122,7 @@ define(function (require, exports, module) {
 
         var fragment = document.createDocumentFragment();
 
-        _.forEach(supported, function(isSupported, key) {
+        lodash.forEach(supported, function(isSupported, key) {
             if (!isSupported) {
                 return;
             }
@@ -138,16 +139,16 @@ define(function (require, exports, module) {
     function getDisplayPref() {
         var pref = prefs.get('displayList');
 
-        return _.isArray(pref) ? pref : ['default'];
+        return lodash.isArray(pref) ? pref : ['default'];
     }
 
     function setDisplayPref(name, isDisplayed) {
         var displayedPrefs = getDisplayPref();
 
         if (isDisplayed) {
-            displayedPrefs = _.uniq(displayedPrefs.concat(name));
+            displayedPrefs = lodash.uniq(displayedPrefs.concat(name));
         } else {
-            displayedPrefs = _.pull(displayedPrefs, name);
+            displayedPrefs = lodash.pull(displayedPrefs, name);
         }
 
         // do not allow hiding all buttons
@@ -163,17 +164,12 @@ define(function (require, exports, module) {
     }
 
     function onPrefUpdate() {
-        if (!_.includes) {
-            // TODO figure out why we don't always have lodash in a brackets extension
-            return;
-        }
-
         var displayedPrefs = getDisplayPref();
 
         // TODO detect if this list actually changed
 
-        displayList = _.reduce(supportedList, function(memo, val, name) {
-            memo[name] = _.includes(displayedPrefs, name);
+        displayList = lodash.reduce(supportedList, function(memo, val, name) {
+            memo[name] = lodash.includes(displayedPrefs, name);
             return memo;
         }, {});
 
