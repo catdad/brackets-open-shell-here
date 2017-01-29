@@ -25,4 +25,6 @@ gulp.task('zip', function() {
         .pipe(gulp.dest(DEST));
 });
 
-gulp.task('default', sequence('clean', 'zip'));
+gulp.task('build', sequence('clean', 'zip'));
+
+gulp.task('default', ['build']);
