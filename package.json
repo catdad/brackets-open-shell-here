@@ -5,7 +5,7 @@
   "description": "Opens a terminal window in the project root directory.",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "gulp test",
     "build": "gulp build"
   },
   "repository": {
