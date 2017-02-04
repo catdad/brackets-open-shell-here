@@ -9,6 +9,7 @@ module.exports = function (type) {
         // to launch the requested shell in the correct directory
         var cmd = `powershell.exe -Command "Start-Process cmd \\"/c start /d %cd% ${type}\\" -Verb RunAs"`;
 
+        // and now use cmd to run that bad boy
         spawn('cmd.exe', ['/c', cmd], {
             stdio: 'ignore',
             cwd: dirpath,
