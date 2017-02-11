@@ -34,12 +34,4 @@ describe('[open-shell-domain]', () => {
             expect(Object.keys(commands)).to.deep.equal(['start', 'getSupported']);
         });
     });
-
-    describe('"start" command', () => {
-
-    });
-
-    describe('"getSupported" command', () => {
-
-    });
 });
