@@ -1,7 +1,7 @@
 {
   "name": "catdad.open-shell-here",
   "title": "Open Shell Here",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Opens a terminal window in the project root directory.",
   "main": "main.js",
   "scripts": {
