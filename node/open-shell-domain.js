@@ -5,6 +5,7 @@
 
     var supported = require('./supported-shells.js');
     var win = require('./win.js');
+    var linux = require('./linux.js');
 
     var os = (/^win/.test(process.platform) ? 'win' : 'linux');
 
@@ -15,7 +16,12 @@
     var shells = {
         'win-default': win('cmd'),
         'win-bash': win('bash'),
-        'win-powershell': win('powershell')
+        'win-powershell': win('powershell'),
+        // yes, I know this is Ubuntu... I might
+        // need to do some more research for other
+        // distros
+        'linux-default': linux('gnome-terminal'),
+        'linux-xfce4-terminal': linux('xfce4-terminal')
     };
 
     function openShell(dirpath, term = 'default') {

@@ -23,7 +23,9 @@ Supported shells include the default CMD, PowerShell, and on Windows 10, when en
 
 ## Linux and macOS
 
-There are other extensions already that have pretty robust Linux support. I did not find one for Windows (an OS I use regularly), and so I made one. I plan on adding [Linux](https://github.com/catdad/brackets-open-shell-here/issues/1) and [macOS](https://github.com/catdad/brackets-open-shell-here/issues/2) support as I get time. For now, this module will do nothing on those operating systems.
+Ubuntu is now supported, using `gnome-terminal`. If you requite any other distros, please feel free to [open a new issue](https://github.com/catdad/brackets-open-shell-here/issues/new) and I will take a look.
+
+I plan on adding [macOS](https://github.com/catdad/brackets-open-shell-here/issues/2) support as I get time (and a system to test on). For now, this extension will do nothing on a Mac.
 
 ## Building the extension
 

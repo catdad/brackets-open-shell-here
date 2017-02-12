@@ -1,4 +1,4 @@
-/* jshint devel: true, esversion: 6 */
+/* jshint devel: true, esversion: 5 */
 /* global define, $, document, brackets */
 
 define(function (require, exports, module) {
@@ -26,10 +26,32 @@ define(function (require, exports, module) {
     // load the style for this extension
     ExtensionUtils.loadStyleSheet(module, 'style/icon.css');
 
+    // really shitty version of Node's util.format
+    // ... or at least the part I use most frequently
+    function render(str) {
+        var args = [].slice.call(arguments, 1);
+        var idx = 0;
+
+        return str.replace(/\%s/g, function (s) {
+            var val = s;
+
+            if (args[idx] !== undefined) {
+                val = args[idx].toString();
+            }
+
+            idx += 1;
+
+            return val;
+        });
+    }
+
     var log = (function(c) {
+        function arr(args) {
+            return ['[' + name + ']'].concat([].slice.call(args));
+        }
 
         function write(func, args) {
-            func(`[${name}]`, ...args);
+            func.apply(null, arr(args));
         }
 
         return {
@@ -50,7 +72,7 @@ define(function (require, exports, module) {
             onPrefUpdate();
         })
         .fail(function (err) {
-            log.error(`failed to get supported shells list:`, err);
+            log.error('failed to get supported shells list:', err);
         });
 
     function openShell(type) {
@@ -64,24 +86,24 @@ define(function (require, exports, module) {
             openShellDomain
                 .exec('start', entry.fullPath, type)
                 .done(function () {
-                    log.info(`${type} shell successfully started, showing ${entry.fullPath}`);
+                    log.info('%s shell successfully started, showing %s', type, entry.fullPath);
                 })
                 .fail(function (err) {
-                    log.error(`Error opening ${type} shell, showing ${entry.fullPath}:`, err);
+                    log.error('Error opening %s shell, showing %s:', type, entry.fullPath, err);
                 });
         };
     }
 
     function $button(type) {
-        return $(`<a href="#" class="catdad-open-shell-icon catdad-open-shell-icon-${type}"></a>`);
+        return $(render('<a href="#" class="catdad-open-shell-icon catdad-open-shell-icon-%s"></a>', type));
     }
 
     function leftClick() {
         $toggles.toggleClass('catdad-open-shell-open');
     }
 
-    var $toggles = $(`<div id="catdad-open-shell-toggles" class="catdad-open-shell-toggles"></div>`)
-        .html(`<div class="catdad-open-shell-toggles-container"></div>`)
+    var $toggles = $('<div id="catdad-open-shell-toggles" class="catdad-open-shell-toggles"></div>')
+        .html('<div class="catdad-open-shell-toggles-container"></div>')
         .on('click', 'a', function() {
             // set the state only, the display will be updated
             // on the pref change
@@ -106,7 +128,7 @@ define(function (require, exports, module) {
             }
 
             $button(key)
-                .attr('title', `Open ${key} shell`)
+                .attr('title', render('Open %s shell', key))
                 .on('click', openShell(key))
                 .on('contextmenu', leftClick)
                 .appendTo(fragment);
