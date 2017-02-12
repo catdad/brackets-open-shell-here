@@ -16,6 +16,12 @@ describe('[supported-shells]', () => {
             }
 
             expect(list).to.be.an('object');
+            
+            Object.keys(list).forEach(name => {
+                expect(list)
+                    .to.have.property(name)
+                    .and.to.be.a('boolean');
+            });
 
             done();
         });
