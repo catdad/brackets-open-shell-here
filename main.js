@@ -26,6 +26,8 @@ define(function (require, exports, module) {
     // load the style for this extension
     ExtensionUtils.loadStyleSheet(module, 'style/icon.css');
 
+    // really shitty version of Node's util.format
+    // ... or at least the part I use most frequently
     function render(str) {
         var args = [].slice.call(arguments, 1);
         var idx = 0;
