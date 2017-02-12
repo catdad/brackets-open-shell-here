@@ -44,7 +44,7 @@ gulp.task('lint', function () {
         .pipe(graceful())
         .pipe(filter(['**/*.js']))
         .pipe(jshint())
-        .pipe(jshint.reporter('default'))
+        .pipe(jshint.reporter('jshint-more-stylish'))
         .pipe(jshint.reporter('fail'))
         .graceful();
 });
