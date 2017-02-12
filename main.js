@@ -1,4 +1,4 @@
-/* jslint devel: true, esversion: 5 */
+/* jshint devel: true, esversion: 5 */
 /* global define, $, document, brackets */
 
 define(function (require, exports, module) {

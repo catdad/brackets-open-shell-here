@@ -10,6 +10,8 @@ var sequence = require('gulp-sequence');
 var mocha = require('gulp-mocha');
 var istanbul = require('gulp-istanbul');
 var filter = require('gulp-filter');
+var jshint = require('gulp-jshint');
+var graceful = require('gulp-graceful-error');
 
 var pkg = require('./package.json');
 
@@ -37,6 +39,16 @@ gulp.task('zip', function () {
         .pipe(gulp.dest(DEST));
 });
 
+gulp.task('lint', function () {
+    return gulp.src(source.all)
+        .pipe(graceful())
+        .pipe(filter(['**/*.js']))
+        .pipe(jshint())
+        .pipe(jshint.reporter('default'))
+        .pipe(jshint.reporter('fail'))
+        .graceful();
+});
+
 gulp.task('coverage-instrument', function () {
     return gulp.src(source.lib)
         .pipe(filter(['**/*.js']))
@@ -51,10 +63,12 @@ gulp.task('coverage-report', function () {
 
 gulp.task('mocha', function () {
     return gulp.src(source.test)
-        .pipe(mocha());
+        .pipe(graceful())
+        .pipe(mocha())
+        .graceful();
 });
 
-gulp.task('test', sequence('coverage-instrument', 'mocha', 'coverage-report'));
+gulp.task('test', sequence('lint', 'coverage-instrument', 'mocha', 'coverage-report'));
 
 gulp.task('build', sequence('clean', 'zip'));
 

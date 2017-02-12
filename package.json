@@ -25,11 +25,14 @@
     "del": "^2.2.2",
     "gulp": "^3.9.1",
     "gulp-filter": "^5.0.0",
+    "gulp-graceful-error": "^1.0.0",
     "gulp-istanbul": "^1.1.1",
+    "gulp-jshint": "^2.0.4",
     "gulp-mocha": "^3.0.1",
     "gulp-sequence": "^0.4.5",
     "gulp-zip": "^3.2.0",
     "istanbul": "^0.4.5",
+    "jshint": "^2.9.4",
     "mocha": "^3.2.0"
   },
   "directories": {
