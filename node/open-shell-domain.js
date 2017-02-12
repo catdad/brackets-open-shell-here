@@ -20,7 +20,7 @@
         // yes, I know this is Ubuntu... I might
         // need to do some more research for other
         // distros
-        'linux-default': linux('gnode-terminal'),
+        'linux-default': linux('gnome-terminal'),
         'linux-xfce4-terminal': linux('xfce4-terminal')
     };
 
