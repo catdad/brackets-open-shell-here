@@ -1,7 +1,11 @@
 # brackets-open-shell-here
 
+[![Build][1]][2]
 [![Code Climate][5]][6]
 [![devDependencies Status][15]][16]
+
+[1]: https://travis-ci.org/catdad/brackets-open-shell-here.svg?branch=master
+[2]: https://travis-ci.org/catdad/brackets-open-shell-here
 
 [5]: https://codeclimate.com/github/catdad/brackets-open-shell-here/badges/gpa.svg
 [6]: https://codeclimate.com/github/catdad/brackets-open-shell-here
