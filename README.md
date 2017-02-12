@@ -21,9 +21,11 @@
 
 Supported shells include the default CMD, PowerShell, and on Windows 10, when enabled, bash is supported as well.
 
-## Linux and macOS
+## Linux
 
 Ubuntu is now supported, using `gnome-terminal`. If you requite any other distros, please feel free to [open a new issue](https://github.com/catdad/brackets-open-shell-here/issues/new) and I will take a look.
+
+## macOS
 
 I plan on adding [macOS](https://github.com/catdad/brackets-open-shell-here/issues/2) support as I get time (and a system to test on). For now, this extension will do nothing on a Mac.
 
