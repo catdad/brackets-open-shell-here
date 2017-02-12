@@ -3,7 +3,7 @@
 var spawn = require('./spawn.js');
 
 module.exports = function (type) {
-    return function openShellWindows(dirpath, title) {
+    return function openShellWindows(dirpath /* , title */) {
         spawn(type, {
             stdio: 'ignore',
             cwd: dirpath
