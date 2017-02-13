@@ -2,7 +2,7 @@
 
 var commonLauncherTests = require('./common-launcher-tests.js');
 
-var launcher = require('../node/linux.js');
+var launcher = require.resolve('../node/linux.js');
 
 describe('[linux]', () => {
     commonLauncherTests(launcher);

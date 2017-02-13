@@ -6,7 +6,8 @@
   "main": "main.js",
   "scripts": {
     "test": "gulp test",
-    "build": "gulp build"
+    "build": "gulp build",
+    "mocha": "mocha"
   },
   "repository": {
     "type": "git",
@@ -33,7 +34,8 @@
     "gulp-zip": "^3.2.0",
     "jshint": "^2.9.4",
     "jshint-more-stylish": "^1.0.1",
-    "mocha": "^3.2.0"
+    "mocha": "^3.2.0",
+    "mockery": "^2.0.0"
   },
   "directories": {
     "test": "test"

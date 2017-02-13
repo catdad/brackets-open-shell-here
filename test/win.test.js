@@ -2,7 +2,7 @@
 
 var commonLauncherTests = require('./common-launcher-tests.js');
 
-var launcher = require('../node/win.js');
+var launcher = require.resolve('../node/win.js');
 
 describe('[win]', () => {
     commonLauncherTests(launcher);
