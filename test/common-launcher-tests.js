@@ -52,3 +52,6 @@ module.exports = (launcherPath) => {
         launcher()('thing')(__dirname, 'title');
     });
 };
+
+module.exports.enableMock = enableMock;
+module.exports.disableMock = disableMock;
