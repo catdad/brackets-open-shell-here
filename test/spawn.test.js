@@ -100,4 +100,24 @@ describe('[spawn]', () => {
         });
         proc.on('error', done);
     });
+
+    it('logs if an error occurs', function (done) {
+        fakeIo.activate();
+
+        var binary = 'not-a-real-binary-i-hope';
+        var proc = spawn(binary);
+
+        proc.on('error', function (err) {
+            var ioData = fakeIo.deactivate();
+
+            expect(ioData.stdout).to.match(/shell launcher exited with error:/);
+            expect(ioData.stdout).to.contain(err.message);
+
+            expect(ioData.stderr).to.have.lengthOf(0);
+
+
+            done();
+        });
+    });
+
 });
