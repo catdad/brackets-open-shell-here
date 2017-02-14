@@ -20,4 +20,8 @@ describe('[spawn]', () => {
             done();
         });
     });
+
+    it('adds an error handler to the process');
+
+    it('adds an exit handler on the process');
 });
