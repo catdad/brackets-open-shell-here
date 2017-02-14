@@ -1,6 +1,7 @@
 # brackets-open-shell-here
 
-[![Build][1]][2]
+[![Linux Build][1]][2]
+[![Windows Build][12]][13]
 [![Test Coverage][3]][4]
 [![Code Climate][5]][6]
 [![devDependencies Status][15]][16]
@@ -13,6 +14,9 @@
 
 [5]: https://codeclimate.com/github/catdad/brackets-open-shell-here/badges/gpa.svg
 [6]: https://codeclimate.com/github/catdad/brackets-open-shell-here
+
+[12]: https://ci.appveyor.com/api/projects/status/github/catdad/brackets-open-shell-here?branch=master&svg=true
+[13]: https://ci.appveyor.com/project/catdad/brackets-open-shell-here
 
 [15]: https://david-dm.org/catdad/brackets-open-shell-here/dev-status.svg
 [16]: https://david-dm.org/catdad/brackets-open-shell-here?type=dev
