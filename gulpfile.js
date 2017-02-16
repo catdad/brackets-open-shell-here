@@ -1,6 +1,5 @@
-/* jshint node: true */
+/* jshint node: true, esversion: 6 */
 
-var util = require('util');
 var path = require('path');
 
 var gulp = require('gulp');
@@ -32,7 +31,7 @@ gulp.task('clean', function () {
 });
 
 gulp.task('zip', function () {
-    var filename = util.format('%s.zip', pkg.name);
+    var filename = `${pkg.name}-${pkg.version}.zip`;
 
     gulp.src(source.lib, { base: path.resolve(__dirname) })
         .pipe(zip(filename))

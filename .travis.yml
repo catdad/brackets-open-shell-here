@@ -17,7 +17,8 @@ deploy:
   api_key:
     secure: KpYMYTerql1cM1Meig2YnvvuCRV4NIqB82jxrY5WYpwswUxHOhnxMLmQ5q3oRDRsHV7p5G874PcDvSvBqvAXbD0+xarIU8zo4+GChp0Bnyv4QbqkcY/ccYrGT3HBv6U6DXab3RfmgefWxM/Ic4SwizKSdPtFWww8EwjK6XhXU0v8WPAQKxkZbmyLwsLCKVzaYlL5awTC91t4HTizNOb8RqDbv1IywAz/ccbuhN1pBST7verDixnRtLZYmN5Lt87UyxTL0s26O+Y4uYk8PdITJB5860Ysx0XCowTAb9sIpwtFZNQwyFl/RHTxqi9OfYOMkOfT4X7ksQYpWypT1zdaQEnDRzxi3PCs1YsPj4TRSErUUHSoHs2aiHPeYMuyyEoOt1onDNtQJWZaMlx9UPGUUcfIbCT5dvQdQszYgML8S0tjZFy/Ail8r4O96MK9KcT8f9WWPfEm0QNQdXKayF6GOV83S1gmiSSgiojNKY8IWNjfvpKT/NQ/Tx7UAN+sSVip7S0+CqD6QIIqGE6Bxq8eQ/gmtjufiDefye78iVpAPdx8zAobR1/9Bs2hd8StP8TylFHqeYjDht6DydHBzposviHy+Ea/bXVOjZd5AK4ft5yX5IYjDH/+Aty/wzuGJeh8zwLQlzWV+Y9LMOXJSAlEw515ZSWPStwt/rUu6W4UetE=
   skip_cleanup: true
-  file: output/catdad.open-shell-here.zip
+  file_glob: true
+  file: 'output/catdad.open-shell-here*.zip'
   on:
     tags: true
     repo: catdad/brackets-open-shell-here
