@@ -10,7 +10,8 @@ addons:
 after_script:
   - npm run cov-report
 
-before_deploy: "npm run build"
+before_deploy:
+  - npm run build
 
 deploy:
   provider: releases
