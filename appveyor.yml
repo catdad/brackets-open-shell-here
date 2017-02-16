@@ -1,0 +1,28 @@
+environment:
+  matrix:
+    # node.js
+    - nodejs_version: "6.3"
+
+# Install scripts. (runs after repo cloning)
+install:
+  # Get the latest stable version of Node.js or io.js
+  - ps: Install-Product node $env:nodejs_version
+  # install modules
+  - npm install
+
+# Post-install test scripts.
+test_script:
+  # Output useful info for debugging.
+  - node --version
+  - npm --version
+  # run tests
+  - npm test
+
+# scripts to run after tests
+after_test:
+  - set CODECLIMATE_REPO_TOKEN=9d2748bbfcbf98645ff22d14fb32515f60a2370fc6541a17d0ec5502e208edc2
+  - npm run cov-report
+
+# Don't actually build.
+# No idea what this does, but it was in the example file
+build: off
