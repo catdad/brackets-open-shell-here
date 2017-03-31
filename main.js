@@ -50,6 +50,12 @@ define(function (require, exports, module) {
             var argsArr = [].slice.call(args);
             var first = argsArr.shift();
 
+            // Only the first string in a log call can contain
+            // formatting information, so we cannot prepend a
+            // string in the arguments and still format correctly.
+            // So instead, we will add to the first string if
+            // it exists.
+
             if (typeof first === 'string') {
                 first = '[' + name + '] ' + first;
                 argsArr.unshift(first);
