@@ -1,6 +1,8 @@
-/* jshint node: true */
+/* jshint node: true, esversion: 6 */
 
-var exec = require('child_process').exec;
+console.log('exec is required');
+
+var { exec, spawn } = require('child_process');
 var path = require('path');
 
 function extendOpts(opts) {
@@ -19,13 +21,50 @@ function extendOpts(opts) {
     return opts;
 }
 
-module.exports = function (command, opts, callback) {
-    if (typeof opts === 'function') {
+function isArray(val) {
+    return Array.isArray(val);
+}
+
+function isObject(val) {
+    // not the best of object detection, but it will do
+    return val instanceof Object && !isArray(val) && !isFunction(val);
+}
+
+function isFunction(val) {
+    return typeof val === 'function';
+}
+
+function execCustom (command, opts, callback) {
+    if (isFunction(opts)) {
         callback = opts;
+        opts = {};
+    }
+
+    if (!isObject(opts)) {
         opts = {};
     }
 
     opts = extendOpts(opts);
 
     return exec(command, opts, callback);
+}
+
+function spawnCustom (command, args, opts) {
+    if (isObject(args)) {
+        opts = args;
+        args = [];
+    }
+
+    if (!isObject(opts)) {
+        opts = {};
+    }
+
+    opts = extendOpts(opts);
+
+    return spawn(command, args, opts);
+}
+
+module.exports = {
+    exec: execCustom,
+    spawn: spawnCustom
 };
