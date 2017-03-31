@@ -47,7 +47,17 @@ define(function (require, exports, module) {
 
     var log = (function(c) {
         function arr(args) {
-            return ['[' + name + ']'].concat([].slice.call(args));
+            var argsArr = [].slice.call(args);
+            var first = argsArr.shift();
+
+            if (typeof first === 'string') {
+                first = '[' + name + '] ' + first;
+                argsArr.unshift(first);
+            } else {
+                argsArr.unshift('[' + name + ']', first);
+            }
+
+            return argsArr;
         }
 
         function write(func, args) {
