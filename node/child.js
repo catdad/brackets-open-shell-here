@@ -1,7 +1,5 @@
 /* jshint node: true, esversion: 6 */
 
-console.log('exec is required');
-
 var { exec, spawn } = require('child_process');
 var path = require('path');
 
