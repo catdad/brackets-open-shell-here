@@ -1,6 +1,6 @@
 /* jslint node: true, esversion: 6 */
 
-var spawn = require('child_process').spawn;
+var spawn = require('./child.js').spawn;
 
 module.exports = function () {
     var proc = spawn.apply(null, arguments);
