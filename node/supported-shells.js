@@ -1,7 +1,7 @@
 /* jshint node: true, esversion: 6 */
 
 var os = require('os');
-var exec = require('child_process').exec;
+var exec = require('./child.js').exec;
 
 var platform = (/^win/.test(process.platform)) ? 'win' : 'linux';
 var defaults = (function (os) {
