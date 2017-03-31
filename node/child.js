@@ -37,13 +37,13 @@ function isArray(val) {
     return Array.isArray(val);
 }
 
-function isObject(val) {
-    // not the best of object detection, but it will do
-    return val instanceof Object && !isArray(val) && !isFunction(val);
-}
-
 function isFunction(val) {
     return typeof val === 'function';
+}
+
+function isObject(val) {
+    // not the best of object detection, but it will do
+    return !isArray(val) && !isFunction(val) && val instanceof Object;
 }
 
 function execCustom (command, opts, callback) {
