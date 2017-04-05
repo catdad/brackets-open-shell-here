@@ -8,7 +8,11 @@ function extendOpts(opts) {
         opts.env = {};
     }
 
-    var PATH = process.env.PATH || process.env.Path || process.env.path;
+    // make sure to copy the entire existing env, because it
+    // could break a whole slew of things if parts are left out
+    opts.env = Object.assign({}, process.env, opts.env);
+
+    var PATH = opts.env.PATH || opts.env.Path || opts.env.path;
 
     // this happens to detect both Windows and whether it is 64 bit Windows
     // so two birds with one if statement
