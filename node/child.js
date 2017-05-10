@@ -14,6 +14,12 @@ function extendOpts(opts) {
 
     var PATH = opts.env.PATH || opts.env.Path || opts.env.path;
 
+    // We've read these, so get rid of them. Subtly bad things happen when
+    // multiples of these are present.
+    delete opts.env.PATH;
+    delete opts.env.Path;
+    delete opts.env.path;
+
     // this happens to detect both Windows and whether it is 64 bit Windows
     // so two birds with one if statement
     if ('ProgramFiles(x86)' in process.env) {
