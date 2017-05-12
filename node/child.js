@@ -14,15 +14,15 @@ function extendOpts(opts) {
 
     var PATH = opts.env.PATH || opts.env.Path || opts.env.path;
 
-    // We've read these, so get rid of them. Subtly bad things happen when
-    // multiples of these are present.
-    delete opts.env.PATH;
-    delete opts.env.Path;
-    delete opts.env.path;
-
     // this happens to detect both Windows and whether it is 64 bit Windows
     // so two birds with one if statement
     if ('ProgramFiles(x86)' in process.env) {
+        // We've read these, so get rid of them. Subtly bad things happen when
+        // multiples of these are present.
+        delete opts.env.PATH;
+        delete opts.env.Path;
+        delete opts.env.path;
+
         // So... on a 32-bit system, System32 has regular 32-bit apps, so everything just work.
         // This is old news. On a 64-bit system, System32 is actually an alias for all the
         // 64-bit apps, so that all the old legacy stuff using System32 gets the new 64-bit
