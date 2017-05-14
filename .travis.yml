@@ -11,17 +11,6 @@ addons:
   code_climate:
     repo_token: 9d2748bbfcbf98645ff22d14fb32515f60a2370fc6541a17d0ec5502e208edc2
 
-before_script:
-  # log Linux and Darwim terminal... might as well
-  - 'echo gnome-terminal:'
-  - which gnome-terminal
-  - 'echo xfce4-terminal:'
-  - which xfce4-terminal
-  - 'echo Terminal:'
-  - which Terminal`
-  - 'echo iTerm:'
-  - which iTerm
-
 after_script:
   - npm run cov-report
 
