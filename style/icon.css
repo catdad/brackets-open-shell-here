@@ -23,12 +23,13 @@
     mask-position: center;
 }
 
-.catdad-open-shell-icon-bash::after,
-.catdad-open-shell-icon-xfce4-terminal::after {
+.catdad-open-shell-icon-bash::after {
     background-color: #e0952d;
 }
 
-.catdad-open-shell-icon-powershell::after {
+.catdad-open-shell-icon-powershell::after,
+.catdad-open-shell-icon-xfce4-terminal::after,
+.catdad-open-shell-icon-iTerm::after {
     background-color: #6db6ff;
 }
 
