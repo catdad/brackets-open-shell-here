@@ -1,29 +1,11 @@
 /* jshint node: true, esversion: 6 */
 
-var os = require('os');
+var os = require('./os.js');
 var exec = require('./child.js').exec;
 
 var platform = (/^win/.test(process.platform)) ? 'win' : 'linux';
-var defaults = (function (os) {
-    if (/^win/.test(os)) {
-        return {
-            shell: 'cmd',
-            list: ['cmd', 'bash', 'powershell']
-        };
-    }
 
-    if (/^darwin/.test(os)) {
-        return {
-            shell: 'Terminal',
-            list: ['Terminal', 'iTerm']
-        };
-    }
-
-    return {
-        shell: 'gnome-terminal',
-        list: ['gnome-terminal', 'xfce4-terminal']
-    };
-}(process.platform));
+var defaults = os;
 
 function ensureCallback(done) {
     return typeof done === 'function' ? done : function noop() {};
