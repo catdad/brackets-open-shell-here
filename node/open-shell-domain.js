@@ -7,6 +7,7 @@
     var supported = require('./supported-shells.js');
     var win = require('./win.js');
     var linux = require('./linux.js');
+    var darwin = require('./darwin.js');
 
     function openShellUnimplemented(/* dirpath */) {
         console.error('not implemented');
@@ -22,8 +23,8 @@
         'linux-default': linux('gnome-terminal'),
         'linux-xfce4-terminal': linux('xfce4-terminal'),
         // darwin stuff
-        'darwin-default': linux('Terminal'),
-        'darwin-iTerm': linux('iTerm')
+        'darwin-default': darwin('Terminal'),
+        'darwin-iTerm': darwin('iTerm')
     };
 
     function openShell(dirpath, term = 'default') {
