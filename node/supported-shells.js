@@ -5,8 +5,6 @@ var exec = require('./child.js').exec;
 
 var platform = (/^win/.test(process.platform)) ? 'win' : 'linux';
 
-var defaults = os;
-
 function ensureCallback(done) {
     return typeof done === 'function' ? done : function noop() {};
 }
@@ -57,14 +55,14 @@ function supported(bin, callback) {
     return callbackPromise(function (done) {
         find(bin, function (err) {
             done(null, {
-                [bin === defaults.shell ? 'default' : bin]: err ? false : true
+                [bin === os.shell ? 'default' : bin]: err ? false : true
             });
         });
     }, callback);
 }
 
 function getSupportedShells(done) {
-    Promise.all(defaults.list.map(supported)).then(function (val) {
+    Promise.all(os.list.map(supported)).then(function (val) {
         done(null, val.reduce(function (memo, obj) {
             return Object.assign(memo, obj);
         }, {}));
@@ -72,4 +70,4 @@ function getSupportedShells(done) {
 }
 
 module.exports = getSupportedShells;
-module.exports.defaults = defaults;
+module.exports.defaults = os;
