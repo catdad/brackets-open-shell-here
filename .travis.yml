@@ -13,10 +13,14 @@ addons:
 
 before_script:
   # log Linux and Darwim terminal... might as well
-  - echo gnome-terminal `which gnome-terminal`
-  - echo xfce4-terminal `which xfce4-terminal`
-  - echo Terminal `which Terminal`
-  - echo iTerm `which iTerm`
+  - 'echo gnome-terminal:'
+  - which gnome-terminal
+  - 'echo xfce4-terminal:'
+  - which xfce4-terminal
+  - 'echo Terminal:'
+  - which Terminal`
+  - 'echo iTerm:'
+  - which iTerm
 
 after_script:
   - npm run cov-report
