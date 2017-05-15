@@ -1,29 +1,9 @@
 /* jshint node: true, esversion: 6 */
 
-var os = require('os');
+var os = require('./os.js');
 var exec = require('./child.js').exec;
 
 var platform = (/^win/.test(process.platform)) ? 'win' : 'linux';
-var defaults = (function (os) {
-    if (/^win/.test(os)) {
-        return {
-            shell: 'cmd',
-            list: ['cmd', 'bash', 'powershell']
-        };
-    }
-
-    if (/^darwin/.test(os)) {
-        return {
-            shell: 'Terminal',
-            list: ['Terminal', 'iTerm']
-        };
-    }
-
-    return {
-        shell: 'gnome-terminal',
-        list: ['gnome-terminal', 'xfce4-terminal']
-    };
-}(process.platform));
 
 function ensureCallback(done) {
     return typeof done === 'function' ? done : function noop() {};
@@ -75,14 +55,14 @@ function supported(bin, callback) {
     return callbackPromise(function (done) {
         find(bin, function (err) {
             done(null, {
-                [bin === defaults.shell ? 'default' : bin]: err ? false : true
+                [bin === os.shell ? 'default' : bin]: err ? false : true
             });
         });
     }, callback);
 }
 
 function getSupportedShells(done) {
-    Promise.all(defaults.list.map(supported)).then(function (val) {
+    Promise.all(os.list.map(supported)).then(function (val) {
         done(null, val.reduce(function (memo, obj) {
             return Object.assign(memo, obj);
         }, {}));
@@ -90,4 +70,4 @@ function getSupportedShells(done) {
 }
 
 module.exports = getSupportedShells;
-module.exports.defaults = defaults;
+module.exports.defaults = os;

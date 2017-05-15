@@ -8,10 +8,20 @@ var tools = require('./common-launcher-tests.js');
 
 var domain = require.resolve('../node/open-shell-domain.js');
 
-var os = (/^win/.test(process.platform) ? 'win' : 'linux');
-
 function getDomain() {
     return require(domain);
+}
+
+function getOsShells() {
+    if (/^win/.test(process.platform)) {
+        return ['bash', 'powershell'];
+    }
+
+    if (/darwin/.test(process.platform)) {
+        return ['iTerm'];
+    }
+
+    return ['xfce4-terminal'];
 }
 
 function fakeManager() {
@@ -59,11 +69,7 @@ describe('[open-shell-domain]', () => {
         var COMMAND = 'start';
         var PATH = path.resolve('.');
 
-        var shells = ['default'].concat(
-            os === 'win' ?
-            ['bash', 'powershell'] :
-            ['xfce4-terminal']
-        );
+        var shells = ['default'].concat(getOsShells());
 
         shells.forEach(function (name) {
             it(`can open ${name}`, function (done) {

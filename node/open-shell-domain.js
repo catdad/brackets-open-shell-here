@@ -3,11 +3,11 @@
 (function () {
     var path = require('path');
 
+    var os = require('./os.js');
     var supported = require('./supported-shells.js');
     var win = require('./win.js');
     var linux = require('./linux.js');
-
-    var os = (/^win/.test(process.platform) ? 'win' : 'linux');
+    var darwin = require('./darwin.js');
 
     function openShellUnimplemented(/* dirpath */) {
         console.error('not implemented');
@@ -21,12 +21,15 @@
         // need to do some more research for other
         // distros
         'linux-default': linux('gnome-terminal'),
-        'linux-xfce4-terminal': linux('xfce4-terminal')
+        'linux-xfce4-terminal': linux('xfce4-terminal'),
+        // darwin stuff
+        'darwin-default': darwin('Terminal'),
+        'darwin-iTerm': darwin('iTerm')
     };
 
     function openShell(dirpath, term = 'default') {
         var title = path.basename(dirpath);
-        var shell = `${os}-${term}`;
+        var shell = `${os.name}-${term}`;
 
         if (shells[shell]) {
             shells[shell](dirpath, title);
